@@ -1,0 +1,13 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- The "C" Part -->
+  <path d="M71 31C75.5 36.5 78.5 43 78.5 50C78.5 66 66 79 50 79C34 79 21 66 21 50C21 34 34 21 50 21C58.5 21 66 24.5 71.5 30" 
+    stroke="white" 
+    stroke-width="12" 
+    stroke-linecap="round" />
+    
+  <!-- The "X" Part -->
+  <path d="M72 45L88 61M88 45L72 61" 
+    stroke="white" 
+    stroke-width="12" 
+    stroke-linecap="round" />
+</svg>

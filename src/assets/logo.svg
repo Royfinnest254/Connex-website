@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 340" width="400" height="340">
+  <!-- Transparent background — no rect fill -->
+
+  <!-- C: near-complete circle with notch at ~3 o'clock right side -->
+  <circle cx="172" cy="170" r="100"
+    fill="none" stroke="#111111" stroke-width="26"
+    stroke-dasharray="545 88"
+    stroke-dashoffset="-44"
+    stroke-linecap="butt"/>
+
+  <!-- x: lowercase, tight to the right of C -->
+  <line x1="282" y1="132" x2="346" y2="208" stroke="#111111" stroke-width="20" stroke-linecap="round"/>
+  <line x1="346" y1="132" x2="282" y2="208" stroke="#111111" stroke-width="20" stroke-linecap="round"/>
+</svg>

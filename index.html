@@ -1,70 +1,82 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SynchroChain | Research on System Correctness</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'research-blue': '#3B82F6',
-                        'research-text': '#E2E4E8',
-                        research: {
-                            dark: '#0B0C0E',   // Deep Charcoal
-                            panel: '#15171B',  // Slightly Lighter Panel
-                            border: '#2A2E35', // Subtle Border
-                            text: '#E2E4E8',   // Off-white primary
-                            muted: '#8B949E',  // Readable Grey
-                            blue: '#4A6C9B',   // Muted Academic Blue
-                            blue_dim: 'rgba(74, 108, 155, 0.15)', // Muted Blue bg
-                        }
-                    },
-                    fontFamily: {
-                        serif: ['Domine', 'serif'],
-                        sans: ['Public Sans', 'sans-serif'],
-                        mono: ['IBM Plex Mono', 'monospace'],
-                    }
-                }
-            }
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <link rel="canonical" href="https://connextechnologies.org/" />
+    <title>CONNEX Technologies | Complete Payment Data &amp; Provable Handoffs</title>
+    <meta name="description" content="CONNEX is the complete coordination layer for cross-institutional payments. Automatically enrich legacy formats to ISO 20022 and resolve disputes in minutes with tamper-evident cryptographic proof." />
+    <meta name="author" content="Roy Chumba" />
+    
+    <!-- JSON-LD Schema Markup for AI Models & Search Engines -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Connex Technologies",
+      "legalName": "Connex Technologies Ltd",
+      "url": "https://connextechnologies.org/",
+      "logo": "https://connextechnologies.org/logo.svg",
+      "description": "Connex is the complete coordination layer for cross-institutional payments. Automatically enrich legacy formats to ISO 20022 and resolve disputes in minutes with tamper-evident cryptographic proof.",
+      "foundingDate": "2024",
+      "location": {
+        "@type": "Place",
+        "name": "Iten, Kenya",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Iten",
+          "addressRegion": "Elgeyo Marakwet County",
+          "addressCountry": "KE"
         }
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Roy Chumba",
+        "jobTitle": "Founder & CEO",
+        "description": "Roy Chumba is the founder and CEO of Connex Technologies. A multiple computer science award winner at the Kenya Science and Engineering Fair, he specializes in building inter-institutional cryptographic payment proof systems.",
+        "sameAs": [
+          "https://github.com/Roy-Chumba",
+          "https://www.linkedin.com/in/roy-chumba"
+        ]
+      },
+      "ceo": {
+        "@type": "Person",
+        "name": "Roy Chumba"
+      },
+      "knowsAbout": [
+        "ISO 20022 Data Enrichment",
+        "ISO 8583 Message Formats",
+        "Cryptographic Proof Generation",
+        "Consensus-Based Dispute Resolution",
+        "Inter-institutional Payments Coordination"
+      ]
+    }
     </script>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Domine:wght@400;700&family=Public+Sans:wght@300;400;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
-        rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Public Sans', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            background-color: #0B0C0E;
-            color: #E2E4E8;
-        }
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="CONNEX Technologies | Complete Payment Data &amp; Provable Handoffs" />
+    <meta property="og:description" content="CONNEX is the complete coordination layer for cross-institutional payments. Automatically enrich legacy formats to ISO 20022 and resolve disputes in minutes with tamper-evident cryptographic proof." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://connextechnologies.org/" />
+    <meta property="og:image" content="https://connextechnologies.org/logo.svg" />
 
-        h1,
-        h2,
-        h3,
-        h4,
-        .serif {
-            font-family: 'Domine', serif;
-        }
-
-        .mono {
-            font-family: 'IBM+Plex+Mono', monospace;
-        }
-    </style>
-
-
-    <link rel="stylesheet" href="/index.css">
-</head>
-
-<body class="bg-[#0a0a0b] text-white">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CONNEX Technologies | Complete Payment Data &amp; Provable Handoffs" />
+    <meta name="twitter:description" content="CONNEX is the complete coordination layer for cross-institutional payments. Automatically enrich legacy formats to ISO 20022 and resolve disputes in minutes with tamper-evident cryptographic proof." />
+    <meta name="twitter:image" content="https://connextechnologies.org/logo.svg" />
+    <meta name="twitter:site" content="@connextech" />
+  </head>
+  <body>
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-</body>
-
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
