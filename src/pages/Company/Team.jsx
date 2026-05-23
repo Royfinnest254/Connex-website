@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import RoyChumba from '../../assets/images/roy.png';
-import { useModal } from '../../context/ModalContext';
 
 const Team = () => {
-  const { openWaitlistModal } = useModal();
+  const navigate = useNavigate();
   const revealRefs = useRef([]);
 
   const addToRefs = (el) => {
@@ -81,8 +80,8 @@ const Team = () => {
             <p className="text-muted mb-lg mx-auto" style={{ maxWidth: '750px', fontSize: '1.1rem' }}>
               We're a small team building critical infrastructure. If you want to work on hard problems that institutions will depend on, we want to hear from you.
             </p>
-            <button onClick={openWaitlistModal} className="btn btn-primary" style={{ padding: '16px 48px' }}>
-              JOIN WAITLIST
+            <button onClick={() => navigate('/contact')} className="btn btn-primary" style={{ padding: '16px 48px' }}>
+              CONTACT US
             </button>
           </div>
         </div>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import WaitlistModal from './WaitlistModal';
 
 const Layout = ({ children }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,7 +32,6 @@ const Layout = ({ children }) => {
       <Header isScrolled={isScrolled} />
       <main>{children}</main>
       <Footer />
-      <WaitlistModal />
     </>
   );
 };

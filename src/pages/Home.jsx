@@ -1,11 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useModal } from '../context/ModalContext';
 
 const Home = () => {
-  const { openWaitlistModal, waitlistCount } = useModal();
   const navigate = useNavigate();
   const revealRefs = useRef([]);
+
   const addToRefs = (el) => {
     if (el && !revealRefs.current.includes(el)) {
       revealRefs.current.push(el);
@@ -35,7 +34,7 @@ const Home = () => {
         <div className="container">
           <div className="reveal" ref={addToRefs} style={{ maxWidth: '900px' }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', background: 'rgba(255, 255, 255, 0.05)', padding: '6px 16px', border: '1px solid var(--border-medium)', borderRadius: '4px', marginBottom: '2rem' }}>
-              <span className="mono-label" style={{ color: 'var(--accent)', fontWeight: 'bold', fontSize: '0.7rem' }}>WAITLIST ACTIVE | {waitlistCount} {waitlistCount !== 1 ? 'PEOPLE ENROLLED' : 'PERSON ENROLLED'}</span>
+              <span className="mono-label" style={{ color: 'var(--accent)', fontWeight: 'bold', fontSize: '0.7rem' }}>FOUNDING COHORT ONBOARDING</span>
             </div>
             <h1 className="hero-headline mb-md">
               ONE SYSTEM. <br />
@@ -45,8 +44,8 @@ const Home = () => {
               When money moves between institutions, two things break: data shrinks during format handoffs, and proof disappears when independent logs disagree. Connex solves both in a single, neutral coordination layer.
             </p>
             <div className="hero-actions">
-              <button onClick={openWaitlistModal} className="btn btn-primary" style={{ padding: '16px 36px' }}>
-                JOIN WAITLIST
+              <button onClick={() => navigate('/contact')} className="btn btn-primary" style={{ padding: '16px 36px' }}>
+                REQUEST ACCESS
               </button>
               <button onClick={() => navigate('/product')} className="btn btn-outline" style={{ padding: '16px 36px' }}>
                 LEARN HOW IT WORKS
@@ -158,8 +157,8 @@ const Home = () => {
               We're onboarding a founding cohort of institutions in Kenya. Founding members get priority access, direct input into the product, and a seat at the table as we build the coordination layer for African payments.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem' }}>
-              <button onClick={openWaitlistModal} className="btn btn-primary" style={{ padding: '18px 48px' }}>
-                JOIN WAITLIST
+              <button onClick={() => navigate('/contact')} className="btn btn-primary" style={{ padding: '18px 48px' }}>
+                REQUEST ACCESS
               </button>
               <p className="text-muted" style={{ fontSize: '0.9rem' }}>
                 Or <Link to="/product" style={{ color: 'var(--white)', fontWeight: 'bold' }}>read about how it works.</Link>

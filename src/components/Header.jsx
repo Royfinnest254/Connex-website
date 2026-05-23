@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useModal } from '../context/ModalContext';
 
 const Header = () => {
-  const { openWaitlistModal, waitlistCount } = useModal();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
 
   const navItems = [
     { name: 'PRODUCT',   path: '/product' },
@@ -42,12 +41,9 @@ const Header = () => {
         {/* Desktop Actions */}
         <div className="nav-links desktop-only" style={{ alignItems: 'center' }}>
           <Link to="/company/careers" className="nav-link" style={{ fontSize: '0.7rem' }}>CAREERS</Link>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255, 255, 255, 0.05)', padding: '6px 12px', border: '1px solid var(--border-subtle)', borderRadius: '4px' }}>
-            <span className="mono-label" style={{ fontSize: '0.65rem', color: 'var(--accent)', letterSpacing: '0.1em', fontWeight: 'bold' }}>{waitlistCount} ENROLLED</span>
-          </div>
-          <button onClick={openWaitlistModal} className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.75rem' }}>
-            JOIN WAITLIST
-          </button>
+          <Link to="/contact" className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.75rem', textDecoration: 'none', display: 'inline-block' }}>
+            CONTACT US
+          </Link>
         </div>
 
         {/* Mobile hamburger */}
@@ -78,13 +74,14 @@ const Header = () => {
           </nav>
 
           <div className="mobile-nav-actions">
-            <button
-              onClick={() => { openWaitlistModal(); closeMenu(); }}
+            <Link
+              to="/contact"
               className="btn btn-primary"
-              style={{ width: '100%', padding: '16px', fontSize: '0.85rem' }}
+              onClick={closeMenu}
+              style={{ width: '100%', padding: '16px', fontSize: '0.85rem', textDecoration: 'none', display: 'block', textAlign: 'center' }}
             >
-              JOIN WAITLIST
-            </button>
+              CONTACT US
+            </Link>
           </div>
         </div>
       )}

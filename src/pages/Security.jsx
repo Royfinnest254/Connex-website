@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { useModal } from '../context/ModalContext';
+import { useNavigate } from 'react-router-dom';
 
 const Security = () => {
-  const { openWaitlistModal } = useModal();
+  const navigate = useNavigate();
   const revealRefs = useRef([]);
 
   const addToRefs = (el) => {
@@ -91,11 +91,11 @@ const Security = () => {
             {/* Fixed: button was awkwardly in a 2-col grid with text. Now laid out properly. */}
             <div style={{ marginTop: '2rem', marginBottom: '2rem' }}>
               <button
-                onClick={openWaitlistModal}
+                onClick={() => navigate('/contact')}
                 className="btn btn-primary"
                 style={{ padding: '16px 40px' }}
               >
-                JOIN WAITLIST
+                REQUEST ACCESS
               </button>
             </div>
 

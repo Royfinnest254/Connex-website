@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { useModal } from '../../context/ModalContext';
 
 const About = () => {
-  const { openWaitlistModal } = useModal();
   const revealRefs = useRef([]);
 
   const addToRefs = (el) => {

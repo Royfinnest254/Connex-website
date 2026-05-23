@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { useModal } from '../context/ModalContext';
+import { useNavigate } from 'react-router-dom';
 
 const Product = () => {
-  const { openWaitlistModal } = useModal();
+  const navigate = useNavigate();
   const revealRefs = useRef([]);
 
   const addToRefs = (el) => {
@@ -167,8 +167,8 @@ const Product = () => {
         <div className="container text-center">
           <div className="reveal" ref={addToRefs}>
             <h2 className="mb-md">WANT TO SEE IT IN DETAIL?</h2>
-            <button onClick={openWaitlistModal} className="btn btn-primary" style={{ padding: '18px 48px' }}>
-              JOIN WAITLIST
+            <button onClick={() => navigate('/contact')} className="btn btn-primary" style={{ padding: '18px 48px' }}>
+              CONTACT US
             </button>
           </div>
         </div>

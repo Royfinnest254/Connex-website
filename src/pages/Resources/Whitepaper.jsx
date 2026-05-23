@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { useModal } from '../../context/ModalContext';
+import { useNavigate } from 'react-router-dom';
 
 const Whitepaper = () => {
-  const { openWaitlistModal } = useModal();
+  const navigate = useNavigate();
   const revealRefs = useRef([]);
 
   const addToRefs = (el) => {
@@ -54,7 +54,7 @@ const Whitepaper = () => {
               <p className="text-muted mb-lg" style={{ fontSize: '1.1rem' }}>
                 The Connex Whitepaper contains proprietary protocol specifications and cryptographic proofs. We share it under NDA with institutional partners, regulators, and vetted technical reviewers.
               </p>
-              <button onClick={openWaitlistModal} className="btn btn-primary" style={{ padding: '18px 40px' }}>JOIN WAITLIST</button>
+              <button onClick={() => navigate('/contact')} className="btn btn-primary" style={{ padding: '18px 40px' }}>REQUEST ACCESS</button>
             </div>
           </div>
         </div>

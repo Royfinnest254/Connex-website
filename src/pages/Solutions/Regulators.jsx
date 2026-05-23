@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { useModal } from '../../context/ModalContext';
+import { useNavigate } from 'react-router-dom';
 
 const Regulators = () => {
-  const { openWaitlistModal } = useModal();
+  const navigate = useNavigate();
   const revealRefs = useRef([]);
 
   const addToRefs = (el) => {
@@ -96,8 +96,8 @@ const Regulators = () => {
             <p className="text-muted mb-lg mx-auto" style={{ maxWidth: '700px' }}>
               We brief regulatory and oversight bodies on request.
             </p>
-            <button onClick={openWaitlistModal} className="btn btn-primary" style={{ padding: '18px 48px' }}>
-              JOIN WAITLIST
+            <button onClick={() => navigate('/contact')} className="btn btn-primary" style={{ padding: '18px 48px' }}>
+              CONTACT US
             </button>
           </div>
         </div>
