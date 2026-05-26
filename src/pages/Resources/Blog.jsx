@@ -61,24 +61,42 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Placeholder skeleton cards */}
-      <section className="section" style={{ opacity: 0.3, pointerEvents: 'none' }}>
+      {/* Vetted Technical Previews */}
+      <section className="section structural-border-top">
         <div className="container">
+          <div className="reveal mb-lg" ref={addToRefs}>
+            <div className="mono-label">[ NDA-RESTRICTED TECHNICAL PAPERS ]</div>
+          </div>
           <div className="grid-3">
-            <div className="bento-card">
-              <div className="mono-label mb-sm">INFRASTRUCTURE</div>
-              <div style={{ height: '1rem', width: '80%', background: 'var(--border-subtle)', marginBottom: '0.5rem' }} />
-              <div style={{ height: '1rem', width: '60%', background: 'var(--border-subtle)' }} />
+            <div className="bento-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '220px' }}>
+              <div>
+                <div className="mono-label mb-sm" style={{ color: 'var(--accent)' }}>[ PROTOCOL ]</div>
+                <h3 className="mb-sm" style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>VERIFICATION UNDER THE KENYA EVIDENCE ACT</h3>
+                <p className="text-muted" style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
+                  Analysis of Ed25519 signature quorum validity and cryptographic message chaining admissibility in Kenyan courts.
+                </p>
+              </div>
+              <div className="mono-label" style={{ fontSize: '0.65rem', marginTop: '1.5rem', opacity: 0.5 }}>RESTRICTED ACCESS</div>
             </div>
-            <div className="bento-card">
-              <div className="mono-label mb-sm">TRUST &amp; SAFETY</div>
-              <div style={{ height: '1rem', width: '70%', background: 'var(--border-subtle)', marginBottom: '0.5rem' }} />
-              <div style={{ height: '1rem', width: '50%', background: 'var(--border-subtle)' }} />
+            <div className="bento-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '220px' }}>
+              <div>
+                <div className="mono-label mb-sm" style={{ color: 'var(--accent)' }}>[ INTEGRATION ]</div>
+                <h3 className="mb-sm" style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>ISO 20022 ENRICHMENT ON LEGACY SYSTEMS</h3>
+                <p className="text-muted" style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
+                  How the Connex gateway reconstructs and maps 35+ dropped settlement data fields from ISO 8583 banking rails asynchronously.
+                </p>
+              </div>
+              <div className="mono-label" style={{ fontSize: '0.65rem', marginTop: '1.5rem', opacity: 0.5 }}>RESTRICTED ACCESS</div>
             </div>
-            <div className="bento-card">
-              <div className="mono-label mb-sm">LEGAL</div>
-              <div style={{ height: '1rem', width: '90%', background: 'var(--border-subtle)', marginBottom: '0.5rem' }} />
-              <div style={{ height: '1rem', width: '40%', background: 'var(--border-subtle)' }} />
+            <div className="bento-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '220px' }}>
+              <div>
+                <div className="mono-label mb-sm" style={{ color: 'var(--accent)' }}>[ CONSENSUS ]</div>
+                <h3 className="mb-sm" style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>2-OF-3 QUORUM LATENCY OPTIMIZATION</h3>
+                <p className="text-muted" style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
+                  Benchmarking signature collection and Merkle tree root commitments across AWS, Azure, and Google Cloud witness nodes.
+                </p>
+              </div>
+              <div className="mono-label" style={{ fontSize: '0.65rem', marginTop: '1.5rem', opacity: 0.5 }}>RESTRICTED ACCESS</div>
             </div>
           </div>
         </div>

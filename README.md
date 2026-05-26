@@ -4,7 +4,7 @@ This repository contains the official website and dashboard interface for Connex
 
 ## Architecture
 
-The Connex Technologies website is built with a React frontend and integrates a Namecheap-compatible PHP backend for waitlist and contact forms.
+The Connex Technologies website is built with a React frontend and integrates a Namecheap-compatible PHP backend for contact forms.
 
 ### Frontend
 - **React and Vite**: High-performance static web application framework.
@@ -13,7 +13,7 @@ The Connex Technologies website is built with a React frontend and integrates a 
 - **Snappy Motion**: Snappy hover underlines and reveal animations with no canvas/particle background slop.
 
 ### Backend
-- **PHP Form Handlers**: Native waitlist.php and contact.php scripts optimized for Namecheap cPanel email forwarding and local waitlist count tracking.
+- **PHP Form Handlers**: Native contact.php script optimized for Namecheap cPanel email forwarding.
 
 ## Development
 
