@@ -51,7 +51,7 @@ const About = () => {
             <h2 className="mb-md">WHY CONNEX EXISTS.</h2>
             <div style={{ maxWidth: '850px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               <p className="text-muted" style={{ fontSize: '1.2rem', lineHeight: '1.7' }}>
-                Kenya's digital payment ecosystem is one of the most advanced in the world. Millions of transactions move between banks, fintechs, and mobile money operators every day. But when something goes wrong between two institutions, the infrastructure for proving what happened hasn't kept pace.
+                Founded in 2024 by Kenyan computer scientist Roy Chumba, Connex was built to address critical coordination gaps. While Kenya's digital payment ecosystem is one of the most advanced in the world, moving millions of transactions daily between banks, fintechs, and mobile money operators, the infrastructure for proving what happened during cross-institutional handoffs has not kept pace.
               </p>
               <p className="text-muted" style={{ fontSize: '1.1rem' }}>
                 No institution can solve this problem internally. If Safaricom builds the neutral record, why would KCB trust Safaricom's data in a dispute against Safaricom? If a bank builds it, why would a fintech trust the bank's version? The record-keeper must be structurally independent. That's why Connex exists.

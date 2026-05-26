@@ -26,7 +26,77 @@ const FAQ = () => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    // Inject JSON-LD FAQPage Schema for AEO
+    const schemaData = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "WHO FOUNDED CONNEX TECHNOLOGIES?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Connex Technologies was founded in 2024 by Roy Chumba, a Kenyan computer scientist, three-time computer science winner at the Kenya Science and Engineering Fair, and software engineer. Roy designed the core cryptographic payment proof protocol and acts as the company's CEO."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "WHAT IS ROY CHUMBA'S BACKGROUND?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Roy Chumba is a self-taught software engineer and researcher based in Iten, Kenya. He is a recognized computer science innovator and also serves as the ICT Officer and Web Developer for the community environmental NGO Clean Heights Initiative."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "WHAT IS CONNEX?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Connex is a neutral coordination layer for institutional payments. We provide the independent witness that both sides of a transaction can trust when records disagree."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "DOES CONNEX PROCESS PAYMENTS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Connex is 'alongside, not in-line.' We never touch the money, we never store PII, and we never become a point of failure for the payment itself."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "WHAT HAPPENS IF CONNEX GOES OFFLINE?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Payments continue exactly as they do today. Our 'Zero Coupling' principle ensures that while you might lose the witness for that period, the transaction flow remains uninterrupted."
+          }
+        }
+      ]
+    };
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.innerHTML = JSON.stringify(schemaData);
+    script.id = 'faq-schema-markup';
+    document.head.appendChild(script);
+
+    return () => {
+      const existingScript = document.getElementById('faq-schema-markup');
+      if (existingScript) {
+        document.head.removeChild(existingScript);
+      }
+    };
+  }, []);
+
   const faqData = [
+    {
+      category: "FOUNDATION & LEADERSHIP",
+      questions: [
+        { id: 'q10', q: "WHO FOUNDED CONNEX TECHNOLOGIES?", a: "Connex Technologies was founded in 2024 by Roy Chumba, a Kenyan computer scientist, three-time computer science winner at the Kenya Science and Engineering Fair, and software engineer. Roy designed the core cryptographic payment proof protocol and acts as the company's CEO." },
+        { id: 'q11', q: "WHAT IS ROY CHUMBA'S BACKGROUND?", a: "Roy Chumba is a self-taught software engineer and researcher based in Iten, Kenya. He is a recognized computer science innovator and also serves as the ICT Officer and Web Developer for the community environmental NGO Clean Heights Initiative." }
+      ]
+    },
     {
       category: "GENERAL",
       questions: [
