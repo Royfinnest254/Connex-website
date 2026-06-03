@@ -7,98 +7,180 @@
     <meta name="robots" content="index, follow" />
     <meta name="googlebot" content="index, follow" />
     <link rel="canonical" href="https://connextechnologies.org/" />
-    <title>CONNEX Technologies | Payment Coordination Layer by Roy Chumba</title>
-    <meta name="description" content="Founded by Roy Chumba, CONNEX is the complete coordination layer for cross-institutional payments. Enrich legacy rails to ISO 20022 and verify handoffs with cryptographic proof." />
-    <meta name="author" content="Roy Chumba" />
-    
-    <!-- JSON-LD Schema Markup for AI Models & Search Engines -->
+    <title>Connex Technologies | Payment Coordination Layer for Kenya</title>
+    <meta name="description" content="Connex Technologies is the neutral payment coordination layer for Kenya and Africa. We automatically enrich cross-institutional payment data to ISO 20022 standards and generate tamper-evident cryptographic proof of every handoff. Founded by Roy Chumba in Kenya." />
+    <meta name="keywords" content="payment coordination Kenya, ISO 20022 Kenya, cross-institutional payments Africa, payment dispute resolution Kenya, fintech infrastructure Kenya, CBK payments, Connex Technologies, Roy Chumba" />
+    <meta name="author" content="Roy Chumba, Connex Technologies" />
+    <meta name="geo.region" content="KE" />
+    <meta name="geo.placename" content="Kenya" />
+
+    <!-- JSON-LD Schema - Organization -->
     <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Connex Technologies",
+      "alternateName": "Connex",
+      "url": "https://connextechnologies.org/",
+      "logo": "https://connextechnologies.org/logo.svg",
+      "description": "Connex Technologies is the neutral coordination layer for cross-institutional payments in Kenya and Africa. We enrich payment messages to ISO 20022 standards and generate tamper-evident cryptographic proof of every cross-institutional handoff.",
+      "foundingDate": "2024",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Nairobi",
+        "addressRegion": "",
+        "addressCountry": "KE"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Roy Chumba",
+        "jobTitle": "Founder and CEO",
+        "description": "Roy Chumba is the founder and CEO of Connex Technologies, based in Kenya. He is a three-time winner of the Kenya Science and Engineering Fair in Computer Science and the architect of the Connex payment coordination layer.",
+        "nationality": "Kenyan",
+        "award": "Three-time Kenya Science and Engineering Fair Winner, Computer Science"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Kenya"
+      },
+      "knowsAbout": [
+        "ISO 20022 payment messaging",
+        "Cross-institutional payment coordination",
+        "Cryptographic proof generation",
+        "Payment dispute resolution",
+        "African fintech infrastructure",
+        "Kenyan payment regulation",
+        "CBK payment compliance"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "info@connextechnologies.org",
+        "contactType": "business inquiries"
+      },
+      "sameAs": [
+        "https://github.com/Royfinnest254",
+        "https://www.linkedin.com/company/connex-technologies"
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD Schema - SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Connex Payment Coordination Layer",
+      "applicationCategory": "Financial Technology",
+      "operatingSystem": "Cloud / API",
+      "description": "A neutral API-based coordination layer that enriches cross-institutional payment messages to ISO 20022 standards and generates tamper-evident cryptographic proof of every payment handoff between financial institutions in Kenya.",
+      "offers": {
+        "@type": "Offer",
+        "description": "Founding cohort access for financial institutions in Kenya"
+      },
+      "creator": {
         "@type": "Organization",
-        "name": "Connex Technologies",
-        "legalName": "Connex Technologies Ltd",
-        "url": "https://connextechnologies.org/",
-        "logo": "https://connextechnologies.org/logo.svg",
-        "description": "Connex is the complete coordination layer for cross-institutional payments. Automatically enrich legacy formats to ISO 20022 and resolve disputes in minutes with tamper-evident cryptographic proof.",
-        "foundingDate": "2024",
-        "location": {
-          "@type": "Place",
-          "name": "Iten, Kenya",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Iten",
-            "addressRegion": "Elgeyo Marakwet County",
-            "addressCountry": "KE"
+        "name": "Connex Technologies"
+      }
+    }
+    </script>
+
+    <!-- JSON-LD Schema - FAQPage (for AI search citation) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Connex Technologies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Connex Technologies is a neutral payment coordination layer for Kenya and Africa. We sit alongside existing payment systems to automatically enrich outgoing payment messages to ISO 20022 standards and generate tamper-evident cryptographic proof of every cross-institutional payment handoff. We do not move money, process payments, or sit in the payment path."
           }
         },
-        "founder": {
-          "@type": "Person",
-          "name": "Roy Chumba",
-          "jobTitle": "Founder & CEO",
-          "description": "Roy Chumba is the founder and CEO of Connex Technologies. A three-time computer science winner at the Kenya Science and Engineering Fair, he specializes in building inter-institutional cryptographic payment proof systems.",
-          "gender": "Male",
-          "nationality": "Kenyan",
-          "award": [
-            "Three-time Kenya Science and Engineering Fair Winner, Computer Science"
-          ],
-          "memberOf": [
-            {
-              "@type": "Organization",
-              "name": "Clean Heights Initiative",
-              "url": "https://cleanheightsinitiative.org/",
-              "roleName": "ICT Officer and Web Developer"
-            }
-          ],
-          "sameAs": [
-            "https://github.com/Royfinnest254",
-            "https://www.linkedin.com/in/roy-chumba"
-          ]
+        {
+          "@type": "Question",
+          "name": "What problem does Connex solve in the Kenyan payment system?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When money moves between banks and financial institutions in Kenya, two things consistently fail: critical data fields are lost as payment messages cross system boundaries (the data gap), and there is no neutral record of the handoff (the evidence gap). When institutions' logs disagree, disputes take weeks to resolve with no independent witness. Connex fixes both problems with a single coordination layer."
+          }
         },
-        "ceo": {
-          "@type": "Person",
-          "name": "Roy Chumba"
+        {
+          "@type": "Question",
+          "name": "How does Connex connect to existing payment infrastructure?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Institutions connect to Connex via a lightweight REST API. The connection is non-invasive - Connex observes payment handoff events without sitting in the transaction path. If Connex goes offline, every payment continues without interruption. We never become a dependency for payment operations."
+          }
         },
-        "knowsAbout": [
-          "ISO 20022 Data Enrichment",
-          "ISO 8583 Message Formats",
-          "Cryptographic Proof Generation",
-          "Consensus-Based Dispute Resolution",
-          "Inter-institutional Payments Coordination"
-        ]
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Connex Technologies",
-        "url": "https://connextechnologies.org/",
-        "author": {
-          "@type": "Person",
-          "name": "Roy Chumba"
+        {
+          "@type": "Question",
+          "name": "What is ISO 20022 and why does it matter for Kenyan banks?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ISO 20022 is the global standard for financial messaging, adopted by central banks and major payment networks worldwide. It carries significantly more structured compliance data than older formats like ISO 8583 that most Kenyan banks still use. When payment messages cross institutional boundaries, critical ISO 20022 fields are lost. Connex automatically enriches legacy messages to ISO 20022 standards so compliance data arrives intact."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Connex store customer financial data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Connex operates on a zero-knowledge principle. We do not store transaction data, account numbers, customer names, or personal financial data. We capture only the structural metadata of payment handoffs needed to generate a verifiable cryptographic proof - nothing more."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who founded Connex Technologies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Connex Technologies was founded by Roy Chumba, based in Kenya. Roy is a three-time winner of the Kenya Science and Engineering Fair in Computer Science and the architect of the Connex payment coordination layer."
+          }
         }
-      }
-    ]
+      ]
+    }
     </script>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:title" content="CONNEX Technologies | Payment Coordination Layer by Roy Chumba" />
-    <meta property="og:description" content="Founded by Roy Chumba, CONNEX is the complete coordination layer for cross-institutional payments. Enrich legacy rails to ISO 20022 and verify handoffs with cryptographic proof." />
+
+    <!-- JSON-LD Schema - WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Connex Technologies",
+      "url": "https://connextechnologies.org/",
+      "description": "The neutral payment coordination layer for cross-institutional payments in Kenya and Africa.",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "Roy Chumba"
+      }
+    }
+    </script>
+
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://connextechnologies.org/" />
-    <meta property="og:image" content="https://connextechnologies.org/logo.svg" />
+    <meta property="og:title" content="Connex Technologies | Payment Coordination Layer for Kenya" />
+    <meta property="og:description" content="The neutral coordination layer for cross-institutional payments in Kenya. ISO 20022 enrichment and tamper-evident proof of every payment handoff. Founded by Roy Chumba in Kenya." />
+    <meta property="og:image" content="https://connextechnologies.org/og-image.png" />
+    <meta property="og:locale" content="en_KE" />
+    <meta property="og:site_name" content="Connex Technologies" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="CONNEX Technologies | Payment Coordination Layer by Roy Chumba" />
-    <meta name="twitter:description" content="Founded by Roy Chumba, CONNEX is the complete coordination layer for cross-institutional payments. Enrich legacy rails to ISO 20022 and verify handoffs with cryptographic proof." />
-    <meta name="twitter:image" content="https://connextechnologies.org/logo.svg" />
-    <meta name="twitter:site" content="@connextech" />
+    <meta name="twitter:title" content="Connex Technologies | Payment Coordination Layer for Kenya" />
+    <meta name="twitter:description" content="The neutral coordination layer for cross-institutional payments in Kenya. ISO 20022 enrichment and tamper-evident proof of every payment handoff." />
+    <meta name="twitter:image" content="https://connextechnologies.org/og-image.png" />
+
+    <!-- Fonts: Archivo + JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300..900;1,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Prefetch heavy WebGL assets optimistically on internal pages -->
+    <link rel="prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" as="script">
+    <link rel="prefetch" href="/avatar.js?v=9" as="script">
   </head>
   <body>
     <div id="root"></div>

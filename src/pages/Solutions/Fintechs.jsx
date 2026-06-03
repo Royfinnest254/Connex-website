@@ -1,101 +1,61 @@
-import React, { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import NetBackground from '../../components/NetBackground';
 
-const Fintechs = () => {
-  const navigate = useNavigate();
-  const revealRefs = useRef([]);
-
-  const addToRefs = (el) => {
-    if (el && !revealRefs.current.includes(el)) {
-      revealRefs.current.push(el);
-    }
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-      },
-      { threshold: 0.1 }
-    );
-    revealRefs.current.forEach((ref) => observer.observe(ref));
-    return () => observer.disconnect();
-  }, []);
-
+export default function Fintechs() {
   return (
-    <div className="solutions-page">
-      {/* Hero Section */}
-      <section
-        className="section structural-border-bottom"
-        style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', paddingTop: '100px' }}
-      >
-        <div className="container">
-          <div className="reveal" ref={addToRefs}>
-            <div className="mono-label mb-sm">[ FOR FINTECHS ]</div>
-            <h1 className="hero-headline mb-md">
-              NEUTRAL GROUND <br />
-              <span className="inverted-box">WITH EVERY INSTITUTION.</span>
-            </h1>
-            <p className="text-muted mb-lg" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', maxWidth: '750px' }}>
-              You're the newer player at the table. When a dispute arises with a Tier 1 bank, whose logs does the regulator trust?
-            </p>
-          </div>
+    <>
+      <title>Connex for Fintechs | Verified Payment Infrastructure | Connex Technologies</title>
+
+      <section className="page-hero" aria-labelledby="fintechs-hero-h">
+        <NetBackground />
+        <div className="wrap">
+          <span className="eyebrow">Solutions / Fintechs</span>
+          <h1 id="fintechs-hero-h">For payment<br />fintechs.</h1>
+          <p className="lead">Fintechs move fast. But when your transactions hand off to commercial banks, you lose visibility, data completeness, and, when disputes arise, you have no neutral record. Connex solves all three.</p>
         </div>
       </section>
 
-      {/* Section: The Fintech Problem */}
-      <section className="section structural-border-bottom">
-        <div className="container">
-          <div className="reveal" ref={addToRefs}>
-            <div className="mono-label mb-sm">[ THE FINTECH PROBLEM ]</div>
-            <h2 className="mb-md">YOUR LOGS CARRY LESS WEIGHT.</h2>
-            <div className="grid-2">
-              <p className="text-muted" style={{ fontSize: '1.1rem' }}>
-                You built a great product. You process thousands of transactions. But when something goes wrong between your platform and a legacy bank, the playing field isn't level. They have decades of institutional credibility. You have a two-year track record. In a dispute, that gap matters.
-              </p>
-              <p className="text-muted" style={{ fontSize: '1.1rem' }}>
-                Connex removes it. The verification record doesn't care who generated it. It treats every institution the same. By joining the network, you gain immediate, neutral credibility with every other participant.
-              </p>
+      <section className="section section--tight" aria-labelledby="fintechs-value-h">
+        <div className="wrap">
+          <div className="sec-head reveal">
+            <span className="eyebrow">What Fintechs Get</span>
+            <h2 className="h2 display" id="fintechs-value-h">The infrastructure that makes you credible.</h2>
+          </div>
+          <div className="grid-4 reveal">
+            <div className="cell">
+              <span className="c-key">Institutional Trust</span>
+              <h3>Verified Handoffs</h3>
+              <p>Every transaction you hand off to a partner bank generates a tamper-evident proof record. When disputes arise, you are not arguing from your own logs, because you have independent evidence.</p>
+            </div>
+            <div className="cell">
+              <span className="c-key">Compliance Infrastructure</span>
+              <h3>ISO 20022 Ready</h3>
+              <p>Automatically enrich your outgoing payment messages to meet ISO 20022 standards, the format increasingly required by commercial banks and regulators for cross-institutional transfers.</p>
+            </div>
+            <div className="cell">
+              <span className="c-key">Fast Resolution</span>
+              <h3>No More Waiting</h3>
+              <p>Payment disputes with partner banks that used to take days or weeks of email chains now resolve in minutes. The proof bundle shows exactly what your system sent and when.</p>
+            </div>
+            <div className="cell">
+              <span className="c-key">Simple Integration</span>
+              <h3>API-First</h3>
+              <p>Connect via a single API endpoint. No infrastructure overhaul. No changes to your payment logic. Connex observes the handoffs and does the rest, allowing you to keep moving fast.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section: Speed & Network Value */}
-      <section className="section structural-border-bottom" style={{ background: 'var(--bg-secondary)' }}>
-        <div className="container">
-          <div className="grid-2">
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-md">BUILT FOR SPEED. INTEGRATE WITHOUT SLOWING DOWN.</h3>
-              <p className="text-muted">
-                Simple integration alongside your existing stack. Asynchronous by design. Your engineering team can add Connex without touching your core payment flow or slowing your release cycle. No complex legacy protocols — just clean, modern architecture.
-              </p>
-            </div>
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-md">NETWORK VALUE. SCALE YOUR TRUST.</h3>
-              <p className="text-muted">
-                The moment you join Connex, you gain verification coverage with every other participant on the network. The more institutions that join, the more valuable your membership becomes. This is infrastructure that gets better as it grows.
-              </p>
-            </div>
+      <section className="section" aria-labelledby="fintechs-cta-h">
+        <div className="wrap cta-final">
+          <span className="eyebrow reveal" style={{ justifyContent: 'center' }}>For Fintechs</span>
+          <h2 className="h1 display reveal" id="fintechs-cta-h" style={{ marginTop: 22 }}>Build on verified payment infrastructure.</h2>
+          <div className="row reveal" data-delay="1" style={{ justifyContent: 'center', marginTop: 40 }}>
+            <Link className="btn" to="/contact">Get Access <span className="arrow">→</span></Link>
+            <Link className="btn btn--ghost" to="/product">See How It Works</Link>
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="section">
-        <div className="container text-center">
-          <div className="reveal" ref={addToRefs}>
-            <h2 className="mb-lg">READY TO LEVEL THE PLAYING FIELD?</h2>
-            <button onClick={() => navigate('/contact')} className="btn btn-primary" style={{ padding: '18px 48px' }}>
-              CONTACT US
-            </button>
-          </div>
-        </div>
-      </section>
-    </div>
+    </>
   );
-};
-
-export default Fintechs;
+}

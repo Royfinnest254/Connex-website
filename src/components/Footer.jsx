@@ -1,95 +1,73 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
+const Logo = () => (
+  <svg viewBox="23 63 514 374" fill="none" aria-hidden="true" style={{ height: 24 }}>
+    <path d="M 337.2 329.5 A 150 150 0 1 1 337.2 170.5" stroke="currentColor" strokeWidth="54" strokeLinecap="round"/>
+    <path d="M 407 202 L 503 298 M 503 202 L 407 298" stroke="currentColor" strokeWidth="48" strokeLinecap="round"/>
+  </svg>
+);
 
+export default function Footer() {
   return (
-    <footer style={{ borderTop: '1px solid var(--border-subtle)', padding: 'var(--spacing-xl) 0 4rem 0' }}>
-      <div className="container">
+    <footer className="site-footer" role="contentinfo">
+      <div className="wrap">
+        <div className="footer-top">
+          <div className="footer-brand">
+            <Link className="brand" to="/">
+              <Logo />
+              <span className="brand-name">Connex</span>
+            </Link>
+            <p>The neutral coordination layer for cross-institutional payments in Kenya. Certainty for everyone.</p>
+          </div>
 
-        <div className="footer-grid">
-          <div>
-            <p className="mono-label mb-md">Product</p>
-            <ul style={{ listStyle: 'none' }}>
-              <li className="mb-sm"><Link to="/product" className="nav-link" style={{ textTransform: 'none', opacity: 0.6 }}>How It Works</Link></li>
+          <div className="footer-col">
+            <h4>Product</h4>
+            <ul>
+              <li><Link to="/product">How It Works</Link></li>
+              <li><Link to="/product#process">The Process</Link></li>
+              <li><Link to="/product#principles">Principles</Link></li>
+              <li><Link to="/security">Security</Link></li>
             </ul>
           </div>
 
-          <div>
-            <p className="mono-label mb-md">Solutions</p>
-            <ul style={{ listStyle: 'none' }}>
-              <li className="mb-sm"><Link to="/solutions/banks"      className="nav-link" style={{ textTransform: 'none', opacity: 0.6 }}>For Banks</Link></li>
-              <li className="mb-sm"><Link to="/solutions/fintechs"   className="nav-link" style={{ textTransform: 'none', opacity: 0.6 }}>For Fintechs</Link></li>
-              <li className="mb-sm"><Link to="/solutions/regulators" className="nav-link" style={{ textTransform: 'none', opacity: 0.6 }}>For Regulators</Link></li>
+          <div className="footer-col">
+            <h4>Solutions</h4>
+            <ul>
+              <li><Link to="/solutions/banks">For Banks</Link></li>
+              <li><Link to="/solutions/fintechs">For Fintechs</Link></li>
+              <li><Link to="/solutions/regulators">For Regulators</Link></li>
             </ul>
           </div>
 
-          <div>
-            <p className="mono-label mb-md">Company</p>
-            <ul style={{ listStyle: 'none' }}>
-              <li className="mb-sm"><Link to="/company/about"   className="nav-link" style={{ textTransform: 'none', opacity: 0.6 }}>About</Link></li>
-              <li className="mb-sm"><Link to="/company/team"    className="nav-link" style={{ textTransform: 'none', opacity: 0.6 }}>Team</Link></li>
-              <li className="mb-sm"><Link to="/company/careers" className="nav-link" style={{ textTransform: 'none', opacity: 0.6 }}>Careers</Link></li>
+          <div className="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li><Link to="/company/about">About</Link></li>
+              <li><Link to="/company/team">Team</Link></li>
+              <li><Link to="/company/careers">Careers</Link></li>
+              <li><Link to="/resources/blog">Blog</Link></li>
+              <li><Link to="/resources/faq">FAQ</Link></li>
             </ul>
           </div>
 
-          <div>
-            <p className="mono-label mb-md">Resources</p>
-            <ul style={{ listStyle: 'none' }}>
-              <li className="mb-sm"><Link to="/resources/whitepaper" className="nav-link" style={{ textTransform: 'none', opacity: 0.6 }}>Whitepaper</Link></li>
-              <li className="mb-sm"><Link to="/resources/blog"       className="nav-link" style={{ textTransform: 'none', opacity: 0.6 }}>Blog</Link></li>
-              <li className="mb-sm"><Link to="/resources/faq"        className="nav-link" style={{ textTransform: 'none', opacity: 0.6 }}>FAQ</Link></li>
-              <li className="mb-sm"><Link to="/security"             className="nav-link" style={{ textTransform: 'none', opacity: 0.6 }}>Security</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="mono-label mb-md">Legal</p>
-            <ul style={{ listStyle: 'none' }}>
-              <li className="mb-sm"><Link to="/legal/privacy" className="nav-link" style={{ textTransform: 'none', opacity: 0.6 }}>Privacy Policy</Link></li>
-              <li className="mb-sm"><Link to="/legal/terms"   className="nav-link" style={{ textTransform: 'none', opacity: 0.6 }}>Terms of Service</Link></li>
+          <div className="footer-col">
+            <h4>Connect</h4>
+            <ul>
+              <li><a href="mailto:info@connextechnologies.org">info@connextechnologies.org</a></li>
+              <li><Link to="/contact">Request a briefing</Link></li>
+              <li><Link to="/resources/whitepaper">Whitepaper</Link></li>
+              <li><Link to="/legal/privacy">Privacy Policy</Link></li>
+              <li><Link to="/legal/terms">Terms of Use</Link></li>
             </ul>
           </div>
         </div>
 
-        <div
-          className="footer-bottom"
-          style={{
-            borderTop: '1px solid var(--border-subtle)',
-            paddingTop: '2.5rem',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '1rem',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <img src="/logo.svg" alt="Connex Logo" style={{ width: '18px', height: '18px', opacity: 0.8 }} />
-            <span className="mono-label" style={{ fontSize: '0.8rem', color: 'white', opacity: 0.8 }}>
-              CONNEX Technologies © {currentYear}
-            </span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
-            <a
-              href="https://www.linkedin.com/company/112496389/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.8rem' }}
-              title="Connex LinkedIn"
-            >
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.91h2.79v8.37H6.46v-8.37M7.86 5.5a1.5 1.5 0 1 0 1.5 1.5 1.5 1.5 0 0 0-1.5-1.5Z"/></svg>
-              <span>LinkedIn</span>
-            </a>
-            <p className="text-muted" style={{ fontSize: '0.8rem', opacity: 0.6 }}>Certainty for everyone.</p>
-            <p className="text-muted" style={{ fontSize: '0.8rem', opacity: 0.6 }}>Iten, Kenya</p>
-            <p className="text-muted" style={{ fontSize: '0.8rem', opacity: 0.6 }}>info@connextechnologies.org</p>
-          </div>
+        <div className="footer-bottom">
+          <span>Connex Technologies &copy; <span data-year /></span>
+          <span>Certainty for everyone.</span>
+          <span>Kenya</span>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

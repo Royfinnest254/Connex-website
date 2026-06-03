@@ -1,39 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 
-const Layout = ({ children }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
-
+export default function Layout({ children }) {
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-      
-      // Reveal logic
-      const reveals = document.querySelectorAll('.reveal');
-      reveals.forEach(reveal => {
-        const windowHeight = window.innerHeight;
-        const revealTop = reveal.getBoundingClientRect().top;
-        const revealPoint = 100;
-        if (revealTop < windowHeight - revealPoint) {
-          reveal.classList.add('visible');
-        }
-      });
-    };
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Trigger on mount
-    return () => window.removeEventListener('scroll', handleScroll);
+  useEffect(() => {
+    const header = document.querySelector('.site-header');
+    const onScroll = () => {
+      if (header) header.classList.toggle('is-scrolled', window.scrollY > 24);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      reveals.forEach(el => io.observe(el));
+      return () => io.disconnect();
+    } else {
+      reveals.forEach(el => el.classList.add('in'));
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    document.querySelectorAll('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
+  }, [pathname]);
 
   return (
     <>
-      <Header isScrolled={isScrolled} />
+      <Header />
       <main>{children}</main>
       <Footer />
+      <div className="tex tex--vignette" aria-hidden="true" />
+      <div className="tex tex--grid" aria-hidden="true" />
+      <div className="tex tex--grain" aria-hidden="true" />
     </>
   );
-};
-
-export default Layout;
+}

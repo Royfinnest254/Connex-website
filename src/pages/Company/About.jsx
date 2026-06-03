@@ -1,109 +1,95 @@
-import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import NetBackground from '../../components/NetBackground';
 
-const About = () => {
-  const revealRefs = useRef([]);
-
-  const addToRefs = (el) => {
-    if (el && !revealRefs.current.includes(el)) {
-      revealRefs.current.push(el);
-    }
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-      },
-      { threshold: 0.1 }
-    );
-    revealRefs.current.forEach((ref) => observer.observe(ref));
-    return () => observer.disconnect();
-  }, []);
-
+export default function About() {
   return (
-    <div className="company-page">
-      {/* Hero Section */}
-      <section
-        className="section structural-border-bottom"
-        style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', paddingTop: '100px' }}
-      >
-        <div className="container">
-          <div className="reveal" ref={addToRefs}>
-            <div className="mono-label mb-sm">[ ABOUT CONNEX ]</div>
-            <h1 className="hero-headline mb-md">
-              WE EXIST BECAUSE <br />
-              <span className="inverted-box">NO ONE ELSE CAN.</span>
-            </h1>
-            <p className="text-muted mb-lg" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', maxWidth: '750px' }}>
-              Every institution in the payment network has a financial interest in dispute outcomes. The neutral witness must have zero stake.
-            </p>
-          </div>
+    <>
+      <title>About Connex Technologies | Payment Coordination Layer Founded in Kenya</title>
+
+      <section className="page-hero" aria-labelledby="about-hero-h">
+        <NetBackground />
+        <div className="wrap">
+          <span className="eyebrow">Company / About</span>
+          <h1 id="about-hero-h">Built in Kenya.<br />Built for Africa.</h1>
+          <p className="lead">Connex Technologies is building the neutral coordination layer for cross-institutional payments across Kenya and Africa. We were founded on a simple observation: when money moves between institutions, two things consistently fail: data completeness and independent evidence. We fix both.</p>
         </div>
       </section>
 
-      {/* Section: Why Connex Exists */}
-      <section className="section structural-border-bottom">
-        <div className="container">
-          <div className="reveal" ref={addToRefs}>
-            <div className="mono-label mb-sm">[ OUR MISSION ]</div>
-            <h2 className="mb-md">WHY CONNEX EXISTS.</h2>
-            <div style={{ maxWidth: '850px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              <p className="text-muted" style={{ fontSize: '1.2rem', lineHeight: '1.7' }}>
-                Founded in 2024 by Kenyan computer scientist Roy Chumba, Connex was built to address critical coordination gaps. While Kenya's digital payment ecosystem is one of the most advanced in the world, moving millions of transactions daily between banks, fintechs, and mobile money operators, the infrastructure for proving what happened during cross-institutional handoffs has not kept pace.
-              </p>
-              <p className="text-muted" style={{ fontSize: '1.1rem' }}>
-                No institution can solve this problem internally. If Safaricom builds the neutral record, why would KCB trust Safaricom's data in a dispute against Safaricom? If a bank builds it, why would a fintech trust the bank's version? The record-keeper must be structurally independent. That's why Connex exists.
-              </p>
+      {/* MISSION */}
+      <section className="section" aria-labelledby="mission-h">
+        <div className="wrap">
+          <div className="sec-head reveal">
+            <span className="eyebrow">Our Mission</span>
+            <h2 className="h2 display" id="mission-h">Certainty for everyone in the payment chain.</h2>
+          </div>
+          <div className="two-col">
+            <div className="reveal">
+              <p className="lead">Every bank, fintech, and payment processor in Kenya operates in a system where cross-institutional payment handoffs are opaque. When money leaves one institution and arrives at another, neither party has a neutral record of exactly what happened. Disputes are expensive, slow, and often unresolvable. Compliance is patchy. Regulators have incomplete visibility.</p>
+            </div>
+            <div className="reveal" data-delay="1">
+              <p className="lead">Connex changes that. Not by replacing existing payment rails or competing with the institutions that run them, but by adding a neutral layer that watches every handoff, fills every data gap, and generates tamper-evident proof that any party can independently verify. The witness must have zero stake in the outcome. That is us.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section: Our Principles */}
-      <section className="section structural-border-bottom" style={{ background: 'var(--bg-secondary)' }}>
-        <div className="container">
-          <div className="reveal mb-xl" ref={addToRefs}>
-            <div className="mono-label mb-sm">[ IDENTITY ]</div>
-            <h2 className="mb-md">OUR PRINCIPLES.</h2>
+      {/* PRINCIPLES */}
+      <section className="section section--tight" aria-labelledby="principles-h">
+        <div className="wrap">
+          <div className="sec-head reveal">
+            <span className="eyebrow">What We Stand For</span>
+            <h2 className="h2 display" id="principles-h">Principles we do not negotiate.</h2>
           </div>
+          <div className="grid-4 reveal">
+            <div className="cell">
+              <span className="c-key">Neutrality</span>
+              <h3>No Stake. No Bias.</h3>
+              <p>We do not move money, process payments, or hold customer funds. We have no financial interest in any payment outcome. This is not a positioning statement: it is the architectural foundation of everything we build.</p>
+            </div>
+            <div className="cell">
+              <span className="c-key">Transparency</span>
+              <h3>Verify, Don't Trust</h3>
+              <p>Every proof we generate can be independently verified by any authorised party using standard cryptographic methods. You do not need to take our word for anything. The mathematics speaks.</p>
+            </div>
+            <div className="cell">
+              <span className="c-key">Non-Disruption</span>
+              <h3>Alongside, Not In-Line</h3>
+              <p>We never sit in the payment path. If Connex goes offline, every payment continues uninterrupted. We add a coordination layer, and we never become a single point of failure for anyone's payment operations.</p>
+            </div>
+            <div className="cell">
+              <span className="c-key">Legal Integrity</span>
+              <h3>Built for Court</h3>
+              <p>Our proof records are designed from the ground up to satisfy the admissibility requirements of the Kenyan Evidence Act. When a dispute reaches a regulator or a courtroom, the evidence holds.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <div className="grid-2">
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-sm">"ALONGSIDE, NOT IN-LINE."</h3>
-              <p className="text-muted">We never touch the payment flow. We observe and record without ever becoming a point of failure or a dependency.</p>
-            </div>
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-sm">"ZERO STAKE."</h3>
-              <p className="text-muted">We have no financial relationship to any transaction we witness. Our neutrality is structural, not just promised.</p>
-            </div>
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-sm">"VERIFY, DON'T TRUST."</h3>
-              <p className="text-muted">Any party can independently check any record without contacting us. Trust through mathematics and open verification methods.</p>
-            </div>
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-sm">"OPEN PROTOCOL."</h3>
-              <p className="text-muted">The core coordination protocol is open for inspection. We believe trust is built through transparency and rigorous scrutiny.</p>
-            </div>
+      {/* LOCATION */}
+      <section className="section section--tight" aria-labelledby="location-h">
+        <div className="wrap two-col">
+          <div className="reveal">
+            <span className="eyebrow">Where We Are</span>
+            <h2 className="h2 display" id="location-h" style={{ marginTop: 22 }}>Kenya.</h2>
+          </div>
+          <div className="reveal" data-delay="1" style={{ alignSelf: 'end' }}>
+            <p className="lead">We are based in Kenya. We are building for the Kenyan market first, because that is where we know the infrastructure, the institutions, the regulatory environment, and the real friction points in the payment system. Kenya is not a stepping stone. It is the starting point for building coordination infrastructure that scales across Africa.</p>
           </div>
         </div>
       </section>
 
-      {/* Section: Based in Kenya */}
-      <section className="section">
-        <div className="container">
-          <div className="reveal" ref={addToRefs}>
-            <div className="mono-label mb-sm">[ HEADQUARTERS ]</div>
-            <h2 className="mb-md">BASED IN KENYA. BUILT FOR AFRICA.</h2>
-            <p className="text-muted" style={{ maxWidth: '850px', fontSize: '1.1rem', lineHeight: '1.7' }}>
-              We're headquartered in Kenya because this is where the problem is most acute and the opportunity is largest. Africa's payment ecosystem is growing faster than anywhere in the world. The coordination layer needs to grow with it. We are building the trust infrastructure for the next billion African payment coordination events.
-            </p>
+      {/* CTA */}
+      <section className="section" aria-labelledby="about-cta-h">
+        <div className="wrap cta-final">
+          <span className="eyebrow reveal" style={{ justifyContent: 'center' }}>Get Involved</span>
+          <h2 className="h1 display reveal" id="about-cta-h" style={{ marginTop: 22 }}>We are building this now.</h2>
+          <p className="lead reveal" data-delay="1">If you are a financial institution, regulator, or potential partner who wants to understand what we are building and why, reach out.</p>
+          <div className="row reveal" data-delay="2" style={{ justifyContent: 'center', marginTop: 40 }}>
+            <Link className="btn" to="/contact">Contact Us <span className="arrow">→</span></Link>
+            <Link className="btn btn--ghost" to="/company/team">Meet the Team</Link>
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
-};
-
-export default About;
+}

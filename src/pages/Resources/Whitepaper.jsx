@@ -1,94 +1,120 @@
-import React, { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import NetBackground from '../../components/NetBackground';
 
-const Whitepaper = () => {
-  const navigate = useNavigate();
-  const revealRefs = useRef([]);
+export default function Whitepaper() {
+  const [form, setForm] = useState({ name: '', org: '', email: '', role: '' });
+  const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
 
-  const addToRefs = (el) => {
-    if (el && !revealRefs.current.includes(el)) {
-      revealRefs.current.push(el);
-    }
+  const handle = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
+  const submit = async e => {
+    e.preventDefault();
+    setSending(true);
+    await new Promise(r => setTimeout(r, 800));
+    setSent(true);
+    setSending(false);
   };
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    revealRefs.current.forEach((ref) => observer.observe(ref));
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <div className="whitepaper-page">
-      {/* Hero Section */}
-      <section className="section structural-border-bottom" style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', paddingTop: '100px' }}>
-        <div className="container">
-          <div className="reveal" ref={addToRefs}>
-            <div className="mono-label mb-sm">[ RESOURCES ]</div>
-            <h1 className="hero-headline mb-md" style={{ fontSize: 'clamp(2.5rem, 7vw, 4.5rem)' }}>
-              TECHNICAL <br />
-              <span className="inverted-box">COORDINATION PROTOCOL.</span>
-            </h1>
-            <p className="lead mb-lg text-primary" style={{ fontSize: '1.25rem', maxWidth: '750px' }}>
-              The math behind neutral witnessing. A deep dive into the architecture of the Connex coordination layer.
-            </p>
-          </div>
+    <>
+      <title>Whitepaper | Connex Technologies | Payment Coordination Layer Technical Documentation</title>
+
+      <section className="page-hero" aria-labelledby="wp-hero-h">
+        <NetBackground />
+        <div className="wrap">
+          <span className="eyebrow">Resources / Whitepaper</span>
+          <h1 id="wp-hero-h">The full<br />technical case.</h1>
+          <p className="lead">The Connex whitepaper covers the coordination gap in full: the technical architecture, the data enrichment methodology, the cryptographic proof framework, and the legal admissibility design. Available to qualified institutions and researchers.</p>
         </div>
       </section>
 
-      {/* Section: Access Control */}
-      <section className="section structural-border-bottom">
-        <div className="container text-center">
-          <div className="reveal" ref={addToRefs}>
-            <div className="glass bento-card mx-auto" style={{ maxWidth: '700px', padding: '3rem' }}>
-              <h2 className="mb-md">NDA-PROTECTED RESOURCE.</h2>
-              <p className="text-muted mb-lg" style={{ fontSize: '1.1rem' }}>
-                The Connex Whitepaper contains proprietary protocol specifications and cryptographic proofs. We share it under NDA with institutional partners, regulators, and vetted technical reviewers.
-              </p>
-              <button onClick={() => navigate('/contact')} className="btn btn-primary" style={{ padding: '18px 40px' }}>REQUEST ACCESS</button>
+      <section className="section" aria-labelledby="wp-form-h">
+        <div className="wrap">
+          <div className="nda-card">
+            {sent ? (
+              <div>
+                <span className="eyebrow" style={{ justifyContent: 'center' }}>Request received</span>
+                <h2 className="h3" style={{ marginTop: 22, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '-0.02em' }}>We will be in touch.</h2>
+                <p className="muted" style={{ marginTop: 12, maxWidth: '48ch', margin: '12px auto 0' }}>We review whitepaper requests and follow up with a short conversation before sending the document. Expect a response within two business days.</p>
+              </div>
+            ) : (
+              <>
+                <span className="eyebrow" style={{ justifyContent: 'center' }}>Request Access</span>
+                <h2 id="wp-form-h" className="h3" style={{ marginTop: 22, marginBottom: 8, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '-0.02em' }}>Request the Whitepaper</h2>
+                <p className="muted" style={{ maxWidth: '48ch', margin: '0 auto 2rem' }}>The whitepaper is available to financial institutions, regulators, investors, and researchers. Complete the form below and we will follow up directly.</p>
+                <form onSubmit={submit} style={{ textAlign: 'left' }}>
+                  <div className="form-row">
+                    <div className="field">
+                      <label htmlFor="wp-name">Full Name</label>
+                      <input id="wp-name" name="name" type="text" required value={form.name} onChange={handle} placeholder="Your name" />
+                    </div>
+                    <div className="field">
+                      <label htmlFor="wp-org">Organisation</label>
+                      <input id="wp-org" name="org" type="text" required value={form.org} onChange={handle} placeholder="Institution or organisation" />
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="field">
+                      <label htmlFor="wp-role">Role</label>
+                      <input id="wp-role" name="role" type="text" value={form.role} onChange={handle} placeholder="Your position" />
+                    </div>
+                    <div className="field">
+                      <label htmlFor="wp-email">Work Email</label>
+                      <input id="wp-email" name="email" type="email" required value={form.email} onChange={handle} placeholder="you@organisation.com" />
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'center', marginTop: 8 }}>
+                    <button className="btn" type="submit" disabled={sending}>
+                      {sending ? 'Sending...' : <>Request Whitepaper <span className="arrow">→</span></>}
+                    </button>
+                  </div>
+                </form>
+              </>
+            )}
+          </div>
+
+          <div style={{ maxWidth: 700, margin: 'clamp(48px,8vh,80px) auto 0' }}>
+            <div className="sec-head reveal">
+              <span className="eyebrow">What Is Covered</span>
+              <h2 className="h2 display" id="wp-contents-h">What the whitepaper covers.</h2>
+            </div>
+            <div className="steps">
+              <div className="step reveal">
+                <div className="step-num">01</div>
+                <div>
+                  <span className="step-tag">The Problem</span>
+                  <h3>The Coordination Gap in Kenya</h3>
+                  <p>A detailed analysis of the data loss and evidence gaps in Kenya's cross-institutional payment system, with specific reference to how legacy formats, ISO 20022 migration, and institutional incentives create the current situation.</p>
+                </div>
+              </div>
+              <div className="step reveal">
+                <div className="step-num">02</div>
+                <div>
+                  <span className="step-tag">The Architecture</span>
+                  <h3>How Connex Works</h3>
+                  <p>The full technical architecture of the Connex coordination layer: the enrichment engine, the witness node network, the proof bundle format, and the API design that allows non-invasive integration with existing core banking systems.</p>
+                </div>
+              </div>
+              <div className="step reveal">
+                <div className="step-num">03</div>
+                <div>
+                  <span className="step-tag">The Legal Framework</span>
+                  <h3>Admissibility and Regulation</h3>
+                  <p>How Connex proof records are designed to meet the requirements of the Kenyan Evidence Act for electronic records, and how the architecture relates to the CBK's regulatory framework for payment service providers.</p>
+                </div>
+              </div>
+              <div className="step reveal">
+                <div className="step-num">04</div>
+                <div>
+                  <span className="step-tag">The Roadmap</span>
+                  <h3>What Comes Next</h3>
+                  <p>The founding cohort integration plan, the product development roadmap, and the path from Kenya to broader African market expansion.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* Section: Inside the document */}
-      <section className="section">
-        <div className="container">
-          <div className="reveal mb-xl" ref={addToRefs}>
-            <h2 className="mb-md">INSIDE THIS DOCUMENT.</h2>
-          </div>
-
-          <div className="bento-grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-sm">PROTOCOL ARCHITECTURE</h3>
-              <p className="text-muted">A detailed specification of the coordination layer, observer nodes, and the data-sharing protocol between institutions.</p>
-            </div>
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-sm">CONSENSUS DESIGN</h3>
-              <p className="text-muted">How independent witness nodes achieve low-latency, tamper-evident finality across heterogeneous payment networks.</p>
-            </div>
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-sm">SECURITY PROOFS</h3>
-              <p className="text-muted">Mathematical foundations of our zero-knowledge coordination model. How we prove handoffs without seeing private data.</p>
-            </div>
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-sm">REGULATORY ALIGNMENT</h3>
-              <p className="text-muted">A breakdown of how the protocol design satisfies the requirements of the Kenya Evidence Act and the NPS Act.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+    </>
   );
-};
-
-export default Whitepaper;
+}

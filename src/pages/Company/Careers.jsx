@@ -1,114 +1,113 @@
-import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import NetBackground from '../../components/NetBackground';
 
-const Careers = () => {
-  const revealRefs = useRef([]);
-
-  const addToRefs = (el) => {
-    if (el && !revealRefs.current.includes(el)) {
-      revealRefs.current.push(el);
-    }
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-      },
-      { threshold: 0.1 }
-    );
-    revealRefs.current.forEach((ref) => observer.observe(ref));
-    return () => observer.disconnect();
-  }, []);
-
+export default function Careers() {
   return (
-    <div className="careers-page">
-      {/* Hero Section */}
-      <section
-        className="section structural-border-bottom"
-        style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', paddingTop: '100px' }}
-      >
-        <div className="container">
-          <div className="reveal" ref={addToRefs}>
-            <div className="mono-label mb-sm">[ CAREERS ]</div>
-            <h1 className="hero-headline mb-md">
-              BUILD THE TRUST LAYER <br />
-              <span className="inverted-box">FOR AFRICAN PAYMENTS.</span>
-            </h1>
-            <p className="text-muted mb-lg" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', maxWidth: '750px' }}>
-              Small team. Hard problems. Real infrastructure that real institutions use.
-            </p>
+    <>
+      <title>Careers at Connex Technologies | Join the Team Building African Payment Infrastructure</title>
+
+      <section className="page-hero" aria-labelledby="careers-hero-h">
+        <NetBackground />
+        <div className="wrap">
+          <span className="eyebrow">Company / Careers</span>
+          <h1 id="careers-hero-h">Work on<br />infrastructure<br />that matters.</h1>
+          <p className="lead">We are building the neutral coordination layer for African payments. If you want to work on a problem that is technically challenging, commercially real, and has genuine impact on how money moves across the continent, read on.</p>
+        </div>
+      </section>
+
+      {/* WHAT WE ARE BUILDING */}
+      <section className="section" aria-labelledby="what-h">
+        <div className="wrap">
+          <div className="sec-head reveal">
+            <span className="eyebrow">What We Are Building</span>
+            <h2 className="h2 display" id="what-h">A hard problem. A real solution.</h2>
+          </div>
+          <div className="two-col">
+            <p className="lead reveal">Cross-institutional payment coordination is broken in Kenya and across Africa. Banks and fintechs lose critical data when payment messages cross system boundaries. When disputes arise, there is no neutral record. Connex is building the infrastructure that fixes both problems, without touching a single payment or becoming a dependency for anyone.</p>
+            <p className="lead reveal" data-delay="1">This is early-stage work. It requires people who think clearly about distributed systems, cryptographic proof, financial regulation, and real institutional needs. We are small on purpose. Everyone who joins now shapes the architecture, the product, and the culture.</p>
           </div>
         </div>
       </section>
 
-      {/* Section: Why Connex */}
-      <section className="section structural-border-bottom">
-        <div className="container">
-          <div className="reveal mb-xl" ref={addToRefs}>
-            <h2 className="mb-md">WHY CONNEX.</h2>
+      {/* OPEN ROLES */}
+      <section className="section section--tight" aria-labelledby="roles-h">
+        <div className="wrap">
+          <div className="sec-head reveal">
+            <span className="eyebrow">Open Roles</span>
+            <h2 className="h2 display" id="roles-h">Current openings.</h2>
           </div>
+          <div className="steps">
+            <div className="step reveal">
+              <div className="step-num">01</div>
+              <div>
+                <span className="step-tag">Engineering</span>
+                <h3>Backend Engineer</h3>
+                <p>We need a backend engineer who is comfortable with cryptographic primitives, REST API design, and building systems that financial institutions connect to. You should be able to own a service end-to-end: design, build, test, deploy, and maintain it. Go, Rust, or Node.js. Kenya-based or willing to work closely across Kenyan time zones.</p>
+              </div>
+            </div>
+            <div className="step reveal">
+              <div className="step-num">02</div>
+              <div>
+                <span className="step-tag">Legal &amp; Compliance</span>
+                <h3>Financial Regulation Specialist</h3>
+                <p>We are building proof infrastructure designed for Kenyan legal admissibility. We need someone who understands the Evidence Act, the CBK regulatory framework, and how payment data needs to be structured to hold up in regulatory and court proceedings. Legal qualification or equivalent practitioner experience required.</p>
+              </div>
+            </div>
+            <div className="step reveal">
+              <div className="step-num">03</div>
+              <div>
+                <span className="step-tag">Partnerships</span>
+                <h3>Institutional Partnerships Lead</h3>
+                <p>We are establishing partnerships with the founding cohort of partner institutions. We need someone who can open and manage relationships with banks, fintechs, and regulatory bodies in Kenya, and who understands the payment ecosystem well enough to speak credibly to technical and executive audiences.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <div className="grid-2">
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-sm">REAL DEPENDENCY</h3>
-              <p className="text-muted">You'll build something that financial institutions depend on daily. Reliability isn't a metric here; it's the product.</p>
+      {/* HOW WE WORK */}
+      <section className="section" aria-labelledby="culture-h">
+        <div className="wrap">
+          <div className="sec-head reveal">
+            <span className="eyebrow">How We Work</span>
+            <h2 className="h2 display" id="culture-h">Small. Focused. Direct.</h2>
+          </div>
+          <div className="grid-4 reveal">
+            <div className="cell">
+              <span className="c-key">Communication</span>
+              <h3>Direct and Written</h3>
+              <p>We say what we mean. We write things down. We do not have opinions about things we have not researched. If something is wrong, we say so clearly.</p>
             </div>
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-sm">COMPLEX SYSTEMS</h3>
-              <p className="text-muted">You'll work on real distributed systems, real cryptography, and real regulatory constraints in a fast-paced environment.</p>
+            <div className="cell">
+              <span className="c-key">Scope</span>
+              <h3>One Problem at a Time</h3>
+              <p>We work on the thing that matters most right now. We do not add complexity for its own sake. Every feature must earn its place in the architecture.</p>
             </div>
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-sm">MARKET GROWTH</h3>
-              <p className="text-muted">You'll ship to production in one of the fastest-growing payment ecosystems in the world. Africa is the frontier.</p>
+            <div className="cell">
+              <span className="c-key">Location</span>
+              <h3>Kenya-First</h3>
+              <p>We are based in Kenya. We build for the Kenyan market with Kenyan institutions. Remote collaboration is possible but Kenya-based is strongly preferred for the founding team.</p>
             </div>
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-sm">DIRECT IMPACT</h3>
-              <p className="text-muted">At this stage, every person shapes the product, the culture, and the future of institutional coordination.</p>
+            <div className="cell">
+              <span className="c-key">Stage</span>
+              <h3>Early Stage</h3>
+              <p>This is a founding team role. Compensation includes equity. We are pre-revenue and focused entirely on building the right product and establishing the founding partner cohort.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section: Open Roles */}
-      <section className="section structural-border-bottom" style={{ background: 'var(--bg-secondary)' }}>
-        <div className="container">
-          <div className="reveal mb-xl" ref={addToRefs}>
-            <div className="mono-label mb-xs">[ OPPORTUNITIES ]</div>
-            <h2 className="mb-md">OPEN ROLES.</h2>
-          </div>
-
-          <div className="bento-card reveal" ref={addToRefs}
-            style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '2rem' }}
-          >
-            <div>
-              <h3 className="mb-xs">BACKEND ENGINEER — DISTRIBUTED SYSTEMS</h3>
-              <p className="text-muted" style={{ maxWidth: '600px', marginTop: '0.5rem' }}>
-                You'll build the core coordination infrastructure. This is the hardest engineering problem in the company and the one that matters most.
-              </p>
-            </div>
-            <a href="mailto:info@connextechnologies.org" className="btn btn-primary" style={{ padding: '14px 32px', flexShrink: 0 }}>
-              APPLY NOW
-            </a>
+      {/* CTA */}
+      <section className="section" aria-labelledby="careers-cta-h">
+        <div className="wrap cta-final">
+          <span className="eyebrow reveal" style={{ justifyContent: 'center' }}>Apply</span>
+          <h2 className="h1 display reveal" id="careers-cta-h" style={{ marginTop: 22 }}>Tell us what you would build.</h2>
+          <p className="lead reveal" data-delay="1">Send us a short note about the role you are interested in, what you have built, and why the Connex problem interests you. No formal application process. Just a direct conversation.</p>
+          <div className="row reveal" data-delay="2" style={{ justifyContent: 'center', marginTop: 40 }}>
+            <a className="btn" href="mailto:info@connextechnologies.org?subject=Application - Connex Technologies">Email Us to Apply <span className="arrow">→</span></a>
           </div>
         </div>
       </section>
-
-      {/* No Role Fits */}
-      <section className="section">
-        <div className="container text-center">
-          <div className="reveal" ref={addToRefs}>
-            <h2 className="mb-md">NO OPEN ROLE THAT FITS?</h2>
-            <p className="text-muted mb-lg mx-auto" style={{ maxWidth: '700px' }}>
-              If you're exceptional and think you should be here, reach out anyway. We're always looking for world-class talent to help us build the future of payments.
-            </p>
-            <p style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>info@connextechnologies.org</p>
-          </div>
-        </div>
-      </section>
-    </div>
+    </>
   );
-};
-
-export default Careers;
+}

@@ -1,103 +1,94 @@
-import React, { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import NetBackground from '../../components/NetBackground';
 
-const Banks = () => {
-  const navigate = useNavigate();
-  const revealRefs = useRef([]);
-
-  const addToRefs = (el) => {
-    if (el && !revealRefs.current.includes(el)) {
-      revealRefs.current.push(el);
-    }
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-      },
-      { threshold: 0.1 }
-    );
-    revealRefs.current.forEach((ref) => observer.observe(ref));
-    return () => observer.disconnect();
-  }, []);
-
+export default function Banks() {
   return (
-    <div className="solutions-page">
-      {/* Hero Section */}
-      <section
-        className="section structural-border-bottom"
-        style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', paddingTop: '100px' }}
-      >
-        <div className="container">
-          <div className="reveal" ref={addToRefs}>
-            <div className="mono-label mb-sm">[ FOR BANKS ]</div>
-            <h1 className="hero-headline mb-md">
-              DISPUTES RESOLVED <br />
-              <span className="inverted-box">IN MINUTES, NOT WEEKS.</span>
-            </h1>
-            <p className="text-muted mb-lg" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', maxWidth: '750px' }}>
-              Your reconciliation teams shouldn't spend weeks matching transaction logs with counterparties. There's a better way.
-            </p>
-          </div>
+    <>
+      <title>Connex for Banks | ISO 20022 Enrichment and Payment Proof | Connex Technologies</title>
+
+      <section className="page-hero" aria-labelledby="banks-hero-h">
+        <NetBackground />
+        <div className="wrap">
+          <span className="eyebrow">Solutions / Banks</span>
+          <h1 id="banks-hero-h">For commercial<br />and retail banks.</h1>
+          <p className="lead">Banks carry the highest compliance burden in the payment ecosystem. Connex gives your operations team the data completeness and evidence infrastructure they need, without changing how you move money.</p>
         </div>
       </section>
 
-      {/* Section: Status Quo vs With Connex */}
-      <section className="section structural-border-bottom">
-        <div className="container">
-          <div className="grid-2">
-            <div className="reveal" ref={addToRefs}>
-              <h2 className="mb-md">WHAT HAPPENS TODAY.</h2>
-              <p className="text-muted" style={{ fontSize: '1.1rem' }}>
-                A customer calls. They say their transfer never arrived. Your team pulls the internal logs. The counterparty pulls theirs. The records don't match. Now it's phone calls, emails, escalations, and spreadsheets. Both sides are working from their own data. Neither trusts the other's. The customer waits. Your team burns hours. The counterparty's team burns hours. And there's still no guarantee of resolution.
-              </p>
-            </div>
-            <div className="reveal" ref={addToRefs}>
-              <h2 className="mb-md">WHAT CHANGES WITH CONNEX.</h2>
-              <p className="text-muted" style={{ fontSize: '1.1rem' }}>
-                When a dispute arises, you pull the verification record. It shows exactly what happened during the handoff, confirmed by independent parties. No more he-said-she-said. No more weeks of manual investigation. The evidence is verifiable, tamper-evident, and designed to be admissible under Kenyan law.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div style={{ display: 'flex', gap: 'clamp(6px,1vw,12px)', padding: 'clamp(20px,4vw,60px) var(--gutter)', maxWidth: 'var(--maxw)', margin: '0 auto', flexWrap: 'wrap' }}>
+        <Link to="/solutions/banks" className="tabs" style={{ marginBottom: 0, display: 'inline-flex', flex: 'unset' }}>
+          <a href="#" className="active" onClick={e => e.preventDefault()}>Banks</a>
+        </Link>
+        <Link to="/solutions/fintechs" className="tabs" style={{ marginBottom: 0, display: 'inline-flex', flex: 'unset' }}>
+          <a href="#" onClick={e => e.preventDefault()}>Fintechs</a>
+        </Link>
+        <Link to="/solutions/regulators" className="tabs" style={{ marginBottom: 0, display: 'inline-flex', flex: 'unset' }}>
+          <a href="#" onClick={e => e.preventDefault()}>Regulators</a>
+        </Link>
+      </div>
 
-      {/* Section: Integration & Compliance */}
-      <section className="section structural-border-bottom" style={{ background: 'var(--bg-secondary)' }}>
-        <div className="container">
-          <div className="grid-2">
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-md">NOTHING CHANGES ABOUT YOUR PAYMENT FLOW.</h3>
-              <p className="text-muted">
-                Connex integrates alongside your existing infrastructure. No modifications to your core banking system. No changes to your payment processing. No downtime. No migration. Your systems continue operating exactly as they do today. Connex adds a verification layer without introducing any new risk to your operations.
-              </p>
+      <section className="section section--tight" aria-labelledby="banks-problem-h">
+        <div className="wrap">
+          <div className="sec-head reveal">
+            <span className="eyebrow">The Problem for Banks</span>
+            <h2 className="h2 display" id="banks-problem-h">Compliance gaps cost real money.</h2>
+          </div>
+          <div className="compare reveal">
+            <div className="compare-col now">
+              <div className="cc-label"><span className="mk" />Without Connex</div>
+              <h3>Incomplete and Contested</h3>
+              <p>Payment messages lose critical compliance fields when they cross system boundaries. Operations teams spend hours reconstructing data manually. Disputes with correspondent banks take weeks to resolve. Regulatory queries arrive with no neutral evidence to support your position.</p>
             </div>
-            <div className="bento-card reveal" ref={addToRefs}>
-              <h3 className="mb-md">BUILT FOR THE WAY KENYA'S INSTITUTIONS OPERATE.</h3>
-              <p className="text-muted">
-                Designed within the framework of the Kenya Evidence Act, the Data Protection Act 2019, and the National Payments System Act. We store only what is necessary and nothing more.
-              </p>
+            <div className="compare-col then">
+              <div className="cc-label"><span className="mk" />With Connex</div>
+              <h3>Complete and Verifiable</h3>
+              <p>Every outgoing payment is automatically enriched to ISO 20022 standards before it leaves your network. Every cross-institutional handoff generates a tamper-evident proof record. When a dispute or regulatory query arrives, you retrieve the proof bundle in seconds, and the evidence is unambiguous.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="section">
-        <div className="container text-center">
-          <div className="reveal" ref={addToRefs}>
-            <h2 className="mb-lg">READY TO STREAMLINE YOUR RECONCILIATION?</h2>
-            <button onClick={() => navigate('/contact')} className="btn btn-primary" style={{ padding: '18px 48px' }}>
-              CONTACT US
-            </button>
+      <section className="section" aria-labelledby="banks-value-h">
+        <div className="wrap">
+          <div className="sec-head reveal">
+            <span className="eyebrow">What Banks Get</span>
+            <h2 className="h2 display" id="banks-value-h">Built for your operations team.</h2>
+          </div>
+          <div className="grid-4 reveal">
+            <div className="cell">
+              <span className="c-key">ISO 20022 Compliance</span>
+              <h3>Automatic Enrichment</h3>
+              <p>Legacy payment messages are automatically transformed to include all required ISO 20022 data fields: no manual formatting, no compliance gaps, no exceptions.</p>
+            </div>
+            <div className="cell">
+              <span className="c-key">Dispute Resolution</span>
+              <h3>Evidence on Demand</h3>
+              <p>Retrieve a cryptographically verified proof bundle for any cross-institutional transaction at any time. Correspondent bank disputes close in minutes, not weeks.</p>
+            </div>
+            <div className="cell">
+              <span className="c-key">Non-Invasive Integration</span>
+              <h3>Zero Disruption</h3>
+              <p>Connex connects via a lightweight API alongside your existing core banking system. We observe the handoffs, and we never sit in the payment path or create a dependency.</p>
+            </div>
+            <div className="cell">
+              <span className="c-key">Regulatory Readiness</span>
+              <h3>Audit-Ready Records</h3>
+              <p>Every proof record is designed to meet the Kenyan Evidence Act admissibility standard. When CBK or any regulator requests evidence of a transaction, you have it ready.</p>
+            </div>
           </div>
         </div>
       </section>
-    </div>
+
+      <section className="section" aria-labelledby="banks-cta-h">
+        <div className="wrap cta-final">
+          <span className="eyebrow reveal" style={{ justifyContent: 'center' }}>For Banks</span>
+          <h2 className="h1 display reveal" id="banks-cta-h" style={{ marginTop: 22 }}>Ready to close the compliance gap?</h2>
+          <div className="row reveal" data-delay="1" style={{ justifyContent: 'center', marginTop: 40 }}>
+            <Link className="btn" to="/contact">Request a Briefing <span className="arrow">→</span></Link>
+            <Link className="btn btn--ghost" to="/product">See How It Works</Link>
+          </div>
+        </div>
+      </section>
+    </>
   );
-};
-
-export default Banks;
+}

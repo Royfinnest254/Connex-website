@@ -1,93 +1,82 @@
-import React, { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import RoyChumba from '../../assets/images/roy.png';
+import { Link } from 'react-router-dom';
+import NetBackground from '../../components/NetBackground';
+import royImage from '../../assets/images/roy.png';
 
-const Team = () => {
-  const navigate = useNavigate();
-  const revealRefs = useRef([]);
-
-  const addToRefs = (el) => {
-    if (el && !revealRefs.current.includes(el)) {
-      revealRefs.current.push(el);
-    }
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-      },
-      { threshold: 0.1 }
-    );
-    revealRefs.current.forEach((ref) => observer.observe(ref));
-    return () => observer.disconnect();
-  }, []);
-
+export default function Team() {
   return (
-    <div className="team-page">
-      {/* Hero Section */}
-      <section
-        className="section structural-border-bottom"
-        style={{ minHeight: '40vh', display: 'flex', alignItems: 'center', paddingTop: '100px' }}
-      >
-        <div className="container">
-          <div className="reveal" ref={addToRefs}>
-            <div className="mono-label mb-sm">[ COMPANY ]</div>
-            <h1 className="hero-headline mb-md">
-              THE PEOPLE <br />
-              <span className="inverted-box">BEHIND CONNEX.</span>
-            </h1>
-          </div>
+    <>
+      <title>Team | Connex Technologies | Founded by Roy Chumba</title>
+
+      <section className="page-hero" aria-labelledby="team-hero-h">
+        <NetBackground />
+        <div className="wrap">
+          <span className="eyebrow">Company / Team</span>
+          <h1 id="team-hero-h">The people<br />building Connex.</h1>
+          <p className="lead">Connex is currently founder-led. We are in the process of building the core team. If you are an engineer, legal expert, or payments specialist who wants to work on infrastructure that matters, we want to hear from you.</p>
         </div>
       </section>
 
-      {/* Founder Section */}
-      <section className="section structural-border-bottom">
-        <div className="container">
-          {/* Uses grid-contact: photo | bio — collapses to 1 col on mobile */}
-          <div className="grid-contact">
-            <div className="reveal" ref={addToRefs}>
-              <div style={{ overflow: 'hidden', border: '1px solid var(--border-subtle)' }}>
-                <img
-                  src={RoyChumba}
-                  alt="Roy Chumba — Founder & CEO"
-                  style={{ width: '100%', height: 'auto', display: 'block', filter: 'grayscale(0.1) contrast(1.1)' }}
-                />
-              </div>
+      {/* FOUNDER */}
+      <section className="section" aria-labelledby="founder-h">
+        <div className="wrap">
+          <div className="sec-head reveal">
+            <span className="eyebrow">Founder</span>
+            <h2 className="h2 display" id="founder-h">Roy Chumba</h2>
+          </div>
+          <div className="founder reveal">
+            <div className="founder-photo">
+              <img src={royImage} alt="Roy Chumba, Founder and CEO of Connex Technologies" />
+              <span className="ph-tag">Founder &amp; CEO</span>
             </div>
-            <div className="reveal" ref={addToRefs} style={{ paddingTop: '0.5rem' }}>
-              <div className="mono-label mb-sm">FOUNDER &amp; CEO</div>
-              <h2 className="mb-md">ROY CHUMBA</h2>
-              <p className="text-muted mb-lg" style={{ fontSize: '1.15rem', lineHeight: '1.7' }}>
-                Roy designed the Connex coordination protocol and leads the company's technical and business strategy. A multiple award-winner at the Kenya Science &amp; Engineering Fair in Computer Science, he has been building software products since age 16 and has deep firsthand understanding of Kenya's payment infrastructure.
-              </p>
-              <div className="text-muted" style={{ fontSize: '1rem' }}>
-                Based in Iten, Kenya.
+            <div>
+              <span className="role">Founder &amp; CEO</span>
+              <h2 style={{ fontSize: 'var(--fs-h2)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '-0.03em', lineHeight: 0.95, margin: '14px 0 22px' }}>Roy Chumba</h2>
+              <p className="muted">Roy Chumba is the founder and CEO of Connex Technologies, based in Kenya. He identified the coordination gap in Kenya's cross-institutional payment system through direct research into how payment data is lost and disputed in the space between institutions.</p>
+              <p className="muted" style={{ marginTop: 16 }}>Roy is a three-time winner of the Kenya Science and Engineering Fair in Computer Science. He is also ICT Officer and Web Developer at Clean Heights Initiative, a community environmental organisation. He is building Connex while based in Kenya, for Kenya.</p>
+              <p className="muted" style={{ marginTop: 16 }}>Connex is his primary focus. The problem is real. The infrastructure does not yet exist. He is building it.</p>
+              <div className="row" style={{ marginTop: 28 }}>
+                <Link className="btn" to="/contact">Work With Us</Link>
+                <Link className="btn btn--ghost" to="/company/careers">Open Roles</Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Growing Section */}
-      <section className="section">
-        <div className="container">
-          <div className="reveal text-center" ref={addToRefs}>
-            <div className="mono-label mb-sm">[ OPPORTUNITY ]</div>
-            <h2 className="mb-md">WE'RE GROWING.</h2>
-            <p className="text-muted mb-lg mx-auto" style={{ maxWidth: '750px', fontSize: '1.1rem' }}>
-              We're a small team building critical infrastructure. If you want to work on hard problems that institutions will depend on, we want to hear from you.
-            </p>
-            <button onClick={() => navigate('/contact')} className="btn btn-primary" style={{ padding: '16px 48px' }}>
-              CONTACT US
-            </button>
+      {/* BUILDING THE TEAM */}
+      <section className="section section--tight" aria-labelledby="hiring-h">
+        <div className="wrap">
+          <div className="sec-head reveal">
+            <span className="eyebrow">We Are Hiring</span>
+            <h2 className="h2 display" id="hiring-h">Building the core team now.</h2>
+          </div>
+          <div className="grid-2 reveal">
+            <div className="cell">
+              <span className="c-key">Engineering</span>
+              <h3>Systems &amp; Backend</h3>
+              <p>We are looking for engineers who want to build cryptographic infrastructure, payment API integrations, and distributed systems that financial institutions actually depend on. Go, Rust, or Node.js background preferred.</p>
+            </div>
+            <div className="cell">
+              <span className="c-key">Legal &amp; Compliance</span>
+              <h3>Financial Law</h3>
+              <p>We need someone who understands Kenyan financial regulation, the Evidence Act, and the CBK regulatory framework, and who wants to help build the legal architecture of a neutral payment witness system.</p>
+            </div>
           </div>
         </div>
       </section>
-    </div>
+
+      {/* CTA */}
+      <section className="section" aria-labelledby="team-cta-h">
+        <div className="wrap cta-final">
+          <span className="eyebrow reveal" style={{ justifyContent: 'center' }}>Join Us</span>
+          <h2 className="h1 display reveal" id="team-cta-h" style={{ marginTop: 22 }}>Want to build this?</h2>
+          <p className="lead reveal" data-delay="1">We are a small, focused team building infrastructure that the African payment system does not yet have. If that matters to you, reach out.</p>
+          <div className="row reveal" data-delay="2" style={{ justifyContent: 'center', marginTop: 40 }}>
+            <Link className="btn" to="/company/careers">See Open Roles <span className="arrow">→</span></Link>
+            <Link className="btn btn--ghost" to="/contact">Get in Touch</Link>
+          </div>
+        </div>
+      </section>
+    </>
   );
-};
-
-export default Team;
+}

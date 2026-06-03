@@ -37,3 +37,6 @@ memory/
 seed-waitlist.js
 test-seed.js
 
+# Local scratch and generated directories
+scratch/
+posters/
