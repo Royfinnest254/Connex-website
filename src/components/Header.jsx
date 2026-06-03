@@ -23,14 +23,12 @@ const NAV = [
     children: [
       { label: 'About', to: '/company/about' },
       { label: 'Team', to: '/company/team' },
-      { label: 'Careers', to: '/company/careers' },
     ],
   },
   {
     label: 'Resources',
     children: [
       { label: 'Whitepaper', to: '/resources/whitepaper' },
-      { label: 'Blog', to: '/resources/blog' },
       { label: 'FAQ', to: '/resources/faq' },
     ],
   },

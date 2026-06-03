@@ -11,9 +11,7 @@ import Fintechs from './pages/Solutions/Fintechs';
 import Regulators from './pages/Solutions/Regulators';
 import About from './pages/Company/About';
 import Team from './pages/Company/Team';
-import Careers from './pages/Company/Careers';
 import Whitepaper from './pages/Resources/Whitepaper';
-import Blog from './pages/Resources/Blog';
 import FAQ from './pages/Resources/FAQ';
 import Security from './pages/Security';
 import Contact from './pages/Contact';
@@ -32,9 +30,7 @@ function App() {
           <Route path="/solutions/regulators" element={<Regulators />} />
           <Route path="/company/about" element={<About />} />
           <Route path="/company/team" element={<Team />} />
-          <Route path="/company/careers" element={<Careers />} />
           <Route path="/resources/whitepaper" element={<Whitepaper />} />
-          <Route path="/resources/blog" element={<Blog />} />
           <Route path="/resources/faq" element={<FAQ />} />
           <Route path="/security" element={<Security />} />
           <Route path="/contact" element={<Contact />} />
