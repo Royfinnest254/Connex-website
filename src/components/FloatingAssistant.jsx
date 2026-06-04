@@ -1,66 +1,46 @@
 import { useState, useEffect, useRef } from 'react';
 
 const SHORTCUTS = [
-  { label: 'Simulate Dispute', cmd: 'Simulate a cross-institutional payment dispute resolution step by step.' },
-  { label: 'The Handoff Gap', cmd: 'Explain the Data Gap vs the Evidence Gap in Kenyan payments.' },
-  { label: 'Technical Setup', cmd: 'What is the technical architecture of Connex? Detail the Go, Python, and PostgreSQL stack.' },
-  { label: 'About Roy', cmd: 'Tell me about the founder and CEO, Roy Chumba.' }
+  { label: "Explain like I'm 5", cmd: 'How does Connex work? Explain like I am 5.' },
+  { label: 'What is your story?', cmd: 'Tell me your story, Roy. How did you start Connex?' },
+  { label: 'Why does Kenya need this?', cmd: 'Why does Kenya need this? How does it help ordinary people?' },
+  { label: 'Simulate a payment', cmd: 'Show me a simple, visual simulation of a payment handoff.' }
 ];
 
 const MOCK_RESPONSES = {
-  'Simulate a cross-institutional payment dispute resolution step by step.': 
-`SIMULATING CROSS-INSTITUTIONAL DISPUTE RESOLUTION:
+  'How does Connex work? Explain like I am 5.': 
+`Imagine sending a letter in the mail. Before delivering it, the mailman tears off the sender's name and the receiver's address. The person getting the letter has to guess who sent it. That is what legacy bank systems do to transactions—they drop important data. 
 
-STEP 1: PAYMENT HANDOFF INITIATION
-Sender sends KES 50,000 via M-Pesa to Equity Bank. The legacy rail processes the core transaction but drops recipient name and structured address metadata.
+Connex is like a plastic sleeve that keeps the envelope complete. 
+
+Also, if the banks argue about whether money was sent, Connex acts as a neutral referee. We write down a digital proof of the transfer on a shared board so there are zero arguments and payment disputes resolve in seconds.`,
+
+  'Tell me your story, Roy. How did you start Connex?':
+`I am 19, self-taught, and based in Kenya. I won the Kenya Science and Engineering Fair in Computer Science three times. 
+
+I built Connex because payment systems between banks are constantly dropping data and causing delays. I wanted to build a neutral coordination layer—an independent referee—that makes sure transactions are complete and certain for everyone in East Africa.`,
+
+  'Why does Kenya need this? How does it help ordinary people?':
+`When you send money from one financial service to another (like M-Pesa to a bank account), details are often lost or delayed due to incompatible system structures. If there is a dispute, your funds can get frozen for weeks.
+
+Connex keeps the transfer data complete and proves the transaction happened instantly. For ordinary people, this means money moves safely, errors are fixed instantly, and transactions never get stuck in validation limbo.`,
+
+  'Show me a simple, visual simulation of a payment handoff.':
+`SIMULATING PAYMENT RESOLUTION:
+
+STEP 1: SENDER INITIATES
+You send KES 5,000 from Service A to Bank B. The traditional network drops your name and address code.
 
 STEP 2: CORRELATION ALERT
-Equity Bank's core system flags the transaction due to missing compliance fields. Funds are frozen. Manual logs are printed.
+Bank B's computer flags the incoming transfer as incomplete and freezes the money.
 
-STEP 3: CONNEX COORDINATION QUERY
-Compliance officer queries the Connex coordination layer using the unique transaction hash.
+STEP 3: CONNEX VERIFICATION
+Connex queries our three independent observer computers. Two of the three confirm they witnessed the transfer and sign their agreement.
 
-STEP 4: CRYPTOGRAPHIC PROOF VERIFICATION
-Connex checks the 2-of-3 witness node consensus signatures (Ed25519) and SHA-256 parent hash chain.
-- Witness Node A: VERIFIED (Signature matches)
-- Witness Node B: VERIFIED (Signature matches)
-- Witness Node C: VERIFIED (Signature matches)
+STEP 4: INSTANT RESOLUTION
+The missing name and address details are restored from the secure coordination record. Bank B releases your funds.
 
-STEP 5: RESOLUTION
-The complete enriched ISO 20022 message metadata is retrieved from the secure database. The recipient address is verified. The bank releases the funds.
-
-TOTAL ELAPSED TIME: 5.2 SECONDS (Compared to 5.2 weeks on legacy rails).`,
-
-  'Explain the Data Gap vs the Evidence Gap in Kenyan payments.':
-`THE COORDINATION GAP IN KENYAN PAYMENTS:
-
-THE DATA GAP
-When money moves between institutions (e.g. M-Pesa to KCB), legacy core systems running ISO 8583 format drop up to 35+ critical metadata fields (like structured sender/receiver addresses and purpose codes). The receiving institution gets an incomplete picture, forcing manual compliance investigations.
-
-THE EVIDENCE GAP
-No single party holds the independent, neutral record of the handoff. Both sending and receiving banks maintain separate databases. When logs disagree, there is no shared truth. Resolving disputes takes weeks of administrative overhead.
-
-THE CONNEX SOLUTION
-Connex resolves both gaps. We enrich the transaction message with missing metadata to achieve full ISO 20022 compliance, and we secure a cryptographically signed proof of the handoff witnessed by independent nodes.`,
-
-  'What is the technical architecture of Connex? Detail the Go, Python, and PostgreSQL stack.':
-`CONNEX SYSTEM ARCHITECTURE:
-
-1. DATA ENRICHMENT LAYER (Local Python AI Microservices)
-Uses local XGBoost models for purpose code classification and local DistilBERT engines for structured address parsing over secure Unix sockets (~2ms latency). Decoupled from the web to guarantee absolute user data privacy.
-
-2. COORDINATION PROOF LAYER (Go Consensus Engine)
-Performs sub-10ms signature verification using Ed25519 keys. Distributes hashes to three witness nodes. A 2-of-3 quorum consensus signature is collected in parallel via non-blocking Go channels.
-
-3. AUDIT & DELIVERY LAYER (PostgreSQL Append-Only Storage)
-Delivers compliant ISO 20022 XML messages to national rails (KEPSS/PesaLink) while appending the signed proof bundles to a PostgreSQL database protected by database-level immutable rules.`,
-
-  'Tell me about the founder and CEO, Roy Chumba.':
-`ABOUT THE FOUNDER:
-
-Roy Chumba is a 19-year-old self-taught systems engineer based in Kenya. He is a three-time winner of the prestigious Kenya Science and Engineering Fair in Computer Science.
-
-Roy founded Connex Technologies to build the neutral coordination proof layer for cross-institutional payment handoffs in East Africa. He also serves as the ICT Officer and Web Developer at Clean Heights Initiative, an environmental community organization in Kenya.`
+TOTAL TIME: 5.2 seconds (Instead of weeks of manual verification).`
 };
 
 export default function FloatingAssistant() {
@@ -68,7 +48,7 @@ export default function FloatingAssistant() {
   const [messages, setMessages] = useState([
     {
       role: 'bot',
-      content: 'Welcome to Connex. I am your Virtual Briefing Assistant, powered by DeepSeek.\n\nSelect a preset shortcut below or ask any question to begin.'
+      content: 'Hi, I am Roy. Ask me anything about Connex, my story, or how we make transactions simple and certain in Kenya. No domain knowledge required.'
     }
   ]);
   const [input, setInput] = useState('');
@@ -81,7 +61,7 @@ export default function FloatingAssistant() {
   const mousePos = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
   const isHovered = useRef(false);
 
-  // 1. WebGL/Canvas Cryptographic Orb Animation
+  // 1. Sleek 3-Node Consensus Orbit Animation
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -89,87 +69,57 @@ export default function FloatingAssistant() {
     let raf;
     let angle = 0;
 
-    const points = [];
-    const numPoints = 24;
-    // Pre-calculate 3D sphere points (3 rings)
-    for (let i = 0; i < numPoints; i++) {
-      const a = (i / numPoints) * Math.PI * 2;
-      // Ring 1: XY plane
-      points.push({ x: Math.cos(a) * 16, y: Math.sin(a) * 16, z: 0 });
-      // Ring 2: YZ plane
-      points.push({ x: 0, y: Math.cos(a) * 16, z: Math.sin(a) * 16 });
-      // Ring 3: XZ plane
-      points.push({ x: Math.cos(a) * 16, y: 0, z: Math.sin(a) * 16 });
-    }
-
-    function rotateX(p, theta) {
-      const c = Math.cos(theta), s = Math.sin(theta);
-      return { x: p.x, y: p.y * c - p.z * s, z: p.y * s + p.z * c };
-    }
-
-    function rotateY(p, theta) {
-      const c = Math.cos(theta), s = Math.sin(theta);
-      return { x: p.x * c + p.z * s, y: p.y, z: -p.x * s + p.z * c };
-    }
-
     function frame() {
       if (!canvas) return;
       ctx.clearRect(0, 0, 56, 56);
       
-      // Interpolate mouse coordinates for smooth magnetic warping
+      // Interpolate mouse attraction coordinate shift
       mousePos.current.x += (mousePos.current.targetX - mousePos.current.x) * 0.1;
       mousePos.current.y += (mousePos.current.targetY - mousePos.current.y) * 0.1;
 
-      // Base rotation speeds
-      angle += 0.015;
-      
-      ctx.strokeStyle = isHovered.current ? '#C09E5A' : '#00869B';
-      ctx.lineWidth = 1;
-
-      // Project and draw rings
-      const projected = points.map(p => {
-        // Double axes rotation
-        let pr = rotateX(p, angle);
-        pr = rotateY(pr, angle * 0.6);
-        
-        // Apply magnetic warp toward mouse coordinates relative to center (28, 28)
-        let cx = 28;
-        let cy = 28;
-        if (isHovered.current) {
-          cx += mousePos.current.x * 0.14;
-          cy += mousePos.current.y * 0.14;
-        }
-
-        // 3D to 2D projection
-        const scale = 35 / (35 + pr.z);
-        return {
-          x: cx + pr.x * scale,
-          y: cy + pr.y * scale
-        };
-      });
-
-      // Draw lines between ring segments
-      const step = numPoints;
-      for (let ring = 0; ring < 3; ring++) {
-        const offset = ring * step;
-        ctx.beginPath();
-        ctx.moveTo(projected[offset].x, projected[offset].y);
-        for (let i = 1; i < step; i++) {
-          ctx.lineTo(projected[offset + i].x, projected[offset + i].y);
-        }
-        ctx.closePath();
-        ctx.stroke();
+      // Orbit center calculation with magnetic pull
+      let cx = 28;
+      let cy = 28;
+      if (isHovered.current) {
+        cx += mousePos.current.x * 0.16;
+        cy += mousePos.current.y * 0.16;
       }
 
-      // Draw small network nodes
-      ctx.fillStyle = '#f2f1ec';
-      projected.forEach((p, idx) => {
-        if (idx % 4 === 0) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, 1.4, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      });
+      angle += 0.02;
+
+      // Draw Orbit Ring
+      ctx.strokeStyle = isHovered.current ? 'rgba(192, 158, 90, 0.25)' : 'rgba(0, 134, 155, 0.2)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 15, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Draw Central Node (Gold)
+      ctx.fillStyle = '#C09E5A';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 3 Revolving Witness Nodes
+      for (let i = 0; i < 3; i++) {
+        const offsetAngle = angle + (i * Math.PI * 2) / 3;
+        const nx = cx + Math.cos(offsetAngle) * 15;
+        const ny = cy + Math.sin(offsetAngle) * 15;
+
+        // Draw connections
+        ctx.strokeStyle = isHovered.current ? 'rgba(192, 158, 90, 0.35)' : 'rgba(0, 134, 155, 0.3)';
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(nx, ny);
+        ctx.stroke();
+
+        // Draw node dot
+        ctx.fillStyle = '#f2f1ec';
+        ctx.beginPath();
+        ctx.arc(nx, ny, 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
 
       raf = requestAnimationFrame(frame);
     }
@@ -178,7 +128,7 @@ export default function FloatingAssistant() {
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  // 2. Track global mouse positioning relative to trigger for attraction calculations
+  // 2. Track mouse position relative to trigger button for magnetic warp
   useEffect(() => {
     const handleMouseMove = (e) => {
       const trigger = triggerRef.current;
@@ -206,14 +156,14 @@ export default function FloatingAssistant() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // 3. Scroll container auto-sync
+  // 3. Auto scroll to bottom
   useEffect(() => {
     if (messageEndRef.current) {
       messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, streamText, isOpen]);
 
-  // 4. Typewriter printout simulator
+  // 4. Typewriter stream simulator
   const streamResponse = (fullText) => {
     setIsTyping(false);
     let index = 0;
@@ -233,36 +183,31 @@ export default function FloatingAssistant() {
     }, 10);
   };
 
-  // Helper to handle local offline fallback matching
   const getLocalFallbackReply = (text) => {
-    // Exact match check
     if (MOCK_RESPONSES[text]) {
       return MOCK_RESPONSES[text];
     }
     
-    // Keyword match checks
     const query = text.toLowerCase();
-    if (query.includes('dispute') || query.includes('simulate')) {
-      return MOCK_RESPONSES['Simulate a cross-institutional payment dispute resolution step by step.'];
+    if (query.includes('how') || query.includes('work') || query.includes('explain')) {
+      return MOCK_RESPONSES['How does Connex work? Explain like I am 5.'];
     }
-    if (query.includes('gap') || query.includes('data') || query.includes('evidence')) {
-      return MOCK_RESPONSES['Explain the Data Gap vs the Evidence Gap in Kenyan payments.'];
+    if (query.includes('story') || query.includes('roy') || query.includes('chumba') || query.includes('founder') || query.includes('who')) {
+      return MOCK_RESPONSES['Tell me your story, Roy. How did you start Connex?'];
     }
-    if (query.includes('architecture') || query.includes('tech') || query.includes('stack') || query.includes('go') || query.includes('python')) {
-      return MOCK_RESPONSES['What is the technical architecture of Connex? Detail the Go, Python, and PostgreSQL stack.'];
+    if (query.includes('kenya') || query.includes('need') || query.includes('ordinary') || query.includes('help')) {
+      return MOCK_RESPONSES['Why does Kenya need this? How does it help ordinary people?'];
     }
-    if (query.includes('roy') || query.includes('chumba') || query.includes('founder') || query.includes('ceo')) {
-      return MOCK_RESPONSES['Tell me about the founder and CEO, Roy Chumba.'];
+    if (query.includes('simulate') || query.includes('dispute') || query.includes('payment') || query.includes('handoff')) {
+      return MOCK_RESPONSES['Show me a simple, visual simulation of a payment handoff.'];
     }
 
-    return `DEVELOPMENT ENVIRONMENT ACTIVE:
+    return `I am currently in development mode. In production, your Namecheap server queries the DeepSeek-V3 API securely.
 
-This assistant is communicating locally. In production, cPanel proxies requests to the DeepSeek completions model securely via chat.php.
-
-To verify layout and streaming text, please select one of the quick shortcuts below.`;
+Please select a quick shortcut button below to test a live payment simulation or explain the system using analogies.`;
   };
 
-  // 5. Send payload to php endpoint
+  // 5. Send message payload
   const handleSendMessage = async (textToSend) => {
     if (!textToSend.trim() || isTyping || streamText) return;
 
@@ -272,14 +217,12 @@ To verify layout and streaming text, please select one of the quick shortcuts be
     setIsTyping(true);
 
     try {
-      // Build message payload history
       const history = messages
         .filter(m => m.content !== '')
         .map(m => ({ role: m.role, content: m.content }));
       
       history.push(userMsg);
 
-      // Relative path chat.php ensures correct subfolder routing
       const res = await fetch('chat.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -297,7 +240,6 @@ To verify layout and streaming text, please select one of the quick shortcuts be
 
       streamResponse(data.message || 'No response returned.');
     } catch (err) {
-      // Local development or server connection fallback
       setTimeout(() => {
         const fallbackText = getLocalFallbackReply(textToSend);
         streamResponse(fallbackText);
@@ -312,7 +254,7 @@ To verify layout and streaming text, please select one of the quick shortcuts be
         ref={triggerRef}
         className="assistant-trigger"
         onClick={() => setIsOpen(!isOpen)}
-        aria-label="Toggle briefing assistant"
+        aria-label="Ask Roy a question"
         aria-expanded={isOpen}
       >
         <canvas ref={canvasRef} width="56" height="56" className="assistant-canvas" />
@@ -320,12 +262,12 @@ To verify layout and streaming text, please select one of the quick shortcuts be
 
       {/* Slide-out Terminal Console */}
       {isOpen && (
-        <div className="assistant-console" role="dialog" aria-label="Connex Briefing Terminal">
+        <div className="assistant-console" role="dialog" aria-label="Ask Roy a Question">
           
           {/* Header */}
           <div className="assistant-header">
-            <h3>CONNEX ASSISTANT</h3>
-            <button className="assistant-close" onClick={() => setIsOpen(false)} aria-label="Close assistant">
+            <h3>ASK ROY A QUESTION</h3>
+            <button className="assistant-close" onClick={() => setIsOpen(false)} aria-label="Close panel">
               &#10005;
             </button>
           </div>
@@ -347,7 +289,7 @@ To verify layout and streaming text, please select one of the quick shortcuts be
             )}
             {isTyping && (
               <div className="assistant-typing">
-                SYSTEM: Connecting to DeepSeek...
+                Connecting...
               </div>
             )}
             <div ref={messageEndRef} />
@@ -379,20 +321,19 @@ To verify layout and streaming text, please select one of the quick shortcuts be
               <input 
                 type="text"
                 className="assistant-input"
-                placeholder="Ask about architecture, data logs, etc..."
+                placeholder="Ask Roy a question..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isTyping || !!streamText}
               />
               <button 
                 type="submit" 
-                className="btn assistant-submit"
+                className="assistant-submit"
                 disabled={isTyping || !!streamText || !input.trim()}
               >
                 SEND
               </button>
             </div>
-            <div className="assistant-credits">Powered by DeepSeek AI</div>
           </form>
 
         </div>
