@@ -581,8 +581,8 @@ strong, b { font-weight: 700; color: var(--ink); }
   position: fixed;
   bottom: 96px;
   right: 24px;
-  width: 380px;
-  height: 520px;
+  width: 440px;
+  height: 620px;
   max-height: calc(100vh - 120px);
   background: var(--clay-bg);
   border: 1px solid var(--line);
@@ -599,7 +599,9 @@ strong, b { font-weight: 700; color: var(--ink); }
     right: 12px;
     left: 12px;
     width: auto;
-    bottom: 92px;
+    top: 12px;
+    bottom: 88px;
+    height: auto;
   }
 }
 

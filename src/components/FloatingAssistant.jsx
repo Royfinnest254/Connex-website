@@ -1,46 +1,52 @@
 import { useState, useEffect, useRef } from 'react';
 
 const SHORTCUTS = [
-  { label: "Explain like I'm 5", cmd: 'How does Connex work? Explain like I am 5.' },
-  { label: 'What is your story?', cmd: 'Tell me your story, Roy. How did you start Connex?' },
-  { label: 'Why does Kenya need this?', cmd: 'Why does Kenya need this? How does it help ordinary people?' },
-  { label: 'Simulate a payment', cmd: 'Show me a simple, visual simulation of a payment handoff.' }
+  { label: 'Who is Roy?', cmd: 'Tell me your story, Roy. How did you start Connex?' },
+  { label: 'The Data Gap', cmd: 'Why are transaction data rails broken in Kenya?' },
+  { label: 'The Proof Layer', cmd: 'How does Connex coordinate payments without touching the money?' },
+  { label: 'Simulate Handoff', cmd: 'Simulate a payment handoff and dispute resolution.' }
 ];
 
 const MOCK_RESPONSES = {
-  'How does Connex work? Explain like I am 5.': 
-`Imagine sending a letter in the mail. Before delivering it, the mailman tears off the sender's name and the receiver's address. The person getting the letter has to guess who sent it. That is what legacy bank systems do to transactions—they drop important data. 
+  'Tell me your story, Roy. How did you start Connex?': 
+`I am a self-taught systems engineer based in Kenya, specializing in payment rails and distributed network infrastructure.
 
-Connex is like a plastic sleeve that keeps the envelope complete. 
+I founded Connex Technologies to solve the coordination gaps and data loss issues in East African payment networks. While consumer-facing money transfer loops move fast, our institutional backends are still disconnected and speak different legacy formats. When banks and telcos hand off transactions, critical metadata gets dropped and logs mismatch, causing frozen funds. I built Connex to be the neutral, cryptographic proof layer that resolves these bottlenecks.`,
 
-Also, if the banks argue about whether money was sent, Connex acts as a neutral referee. We write down a digital proof of the transfer on a shared board so there are zero arguments and payment disputes resolve in seconds.`,
+  'Why are transaction data rails broken in Kenya?':
+`When you send money from M-Pesa to a bank account, the transaction crosses two completely different core architectures. 
 
-  'Tell me your story, Roy. How did you start Connex?':
-`I am 19, self-taught, and based in Kenya. I won the Kenya Science and Engineering Fair in Computer Science three times. 
+Because they speak different formats, legacy systems drop up to 35+ critical metadata fields (like structured sender/receiver addresses and purpose codes) in transition. The receiving bank gets the funds but loses the compliance context. That is the Data Gap. 
 
-I built Connex because payment systems between banks are constantly dropping data and causing delays. I wanted to build a neutral coordination layer—an independent referee—that makes sure transactions are complete and certain for everyone in East Africa.`,
+Furthermore, both institutions keep their own isolated databases. When logs disagree, there is no shared truth. Banks spend weeks cross-checking records manually. That is the Evidence Gap.`,
 
-  'Why does Kenya need this? How does it help ordinary people?':
-`When you send money from one financial service to another (like M-Pesa to a bank account), details are often lost or delayed due to incompatible system structures. If there is a dispute, your funds can get frozen for weeks.
+  'How does Connex coordinate payments without touching the money?':
+`Connex operates alongside the transaction path, not in-line. This means if Connex goes offline, payments continue normally without interruption.
 
-Connex keeps the transfer data complete and proves the transaction happened instantly. For ordinary people, this means money moves safely, errors are fixed instantly, and transactions never get stuck in validation limbo.`,
+The core implementation is a lightweight Go Gateway coordinating 3 Go witness nodes (Alpha, Beta, Gamma on ports 8091-8093) with Ed25519 signatures. Data is enriched into compliant ISO 20022 XML (pacs.008.001.08) and consensus hashes are chained using SHA-256, then committed to an append-only SQLite ledger using database triggers to lock records. A standalone Python verifier using PyNaCl can verify these bundles independently. Performance reaches 250 to 500 TPS with P50 latency under 12 ms.`,
 
-  'Show me a simple, visual simulation of a payment handoff.':
-`SIMULATING PAYMENT RESOLUTION:
+  'Simulate a payment handoff and dispute resolution.':
+`CONNEX SYSTEM SIMULATION:
 
-STEP 1: SENDER INITIATES
-You send KES 5,000 from Service A to Bank B. The traditional network drops your name and address code.
+1. HANDOFF INITIATION
+Transaction: KES 100,000 sent from Telco rail to Bank core.
+Status: Legacy ISO 8583 translation drops 35+ fields.
 
-STEP 2: CORRELATION ALERT
-Bank B's computer flags the incoming transfer as incomplete and freezes the money.
+2. ACTIVE ENRICHMENT & COORDINATION
+Gateway parses transaction and enriches it to validated ISO 20022 XML (pacs.008.001.08).
+Coordination Hash computed (SHA-256 of input + output + previous link).
 
-STEP 3: CONNEX VERIFICATION
-Connex queries our three independent observer computers. Two of the three confirm they witnessed the transfer and sign their agreement.
+3. CONSENSUS & LEDGER SECURING
+Quorum verification requested from 3 independent witness nodes:
+- Witness Alpha (Port 8091): SIGNED (Ed25519 signature valid)
+- Witness Beta (Port 8092): SIGNED (Ed25519 signature valid)
+- Witness Gamma (Port 8093): PENDING
+Quorum established (2-of-3 signatures collected in 8 ms).
+Proof bundle sealed to append-only SQLite ledger via BEFORE UPDATE and BEFORE DELETE trigger locks.
 
-STEP 4: INSTANT RESOLUTION
-The missing name and address details are restored from the secure coordination record. Bank B releases your funds.
-
-TOTAL TIME: 5.2 seconds (Instead of weeks of manual verification).`
+4. INSTANT RESOLUTION
+Standalone Python verifier validates proof bundle. Bank verifies integrity and releases funds.
+Dispute resolved in 8 ms.`
 };
 
 export default function FloatingAssistant() {
@@ -164,7 +170,13 @@ export default function FloatingAssistant() {
   }, [messages, streamText, isOpen]);
 
   // 4. Typewriter stream simulator
-  const streamResponse = (fullText) => {
+  const streamResponse = (rawText) => {
+    // Strip asterisks and replace em-dashes or en-dashes with standard hyphens/punctuation
+    const fullText = rawText
+      .replace(/\*/g, '')
+      .replace(/—/g, ' - ')
+      .replace(/–/g, '-');
+
     setIsTyping(false);
     let index = 0;
     setStreamText('');
@@ -184,27 +196,33 @@ export default function FloatingAssistant() {
   };
 
   const getLocalFallbackReply = (text) => {
-    if (MOCK_RESPONSES[text]) {
-      return MOCK_RESPONSES[text];
+    const cleanText = text.trim();
+    if (MOCK_RESPONSES[cleanText]) {
+      return MOCK_RESPONSES[cleanText];
     }
     
-    const query = text.toLowerCase();
-    if (query.includes('how') || query.includes('work') || query.includes('explain')) {
-      return MOCK_RESPONSES['How does Connex work? Explain like I am 5.'];
-    }
+    const query = cleanText.toLowerCase();
+
+    // Priority 1: Founder details
     if (query.includes('story') || query.includes('roy') || query.includes('chumba') || query.includes('founder') || query.includes('who')) {
       return MOCK_RESPONSES['Tell me your story, Roy. How did you start Connex?'];
     }
-    if (query.includes('kenya') || query.includes('need') || query.includes('ordinary') || query.includes('help')) {
-      return MOCK_RESPONSES['Why does Kenya need this? How does it help ordinary people?'];
+    // Priority 2: Simulate/dispute
+    if (query.includes('simulate') || query.includes('dispute') || query.includes('handoff')) {
+      return MOCK_RESPONSES['Simulate a payment handoff and dispute resolution.'];
     }
-    if (query.includes('simulate') || query.includes('dispute') || query.includes('payment') || query.includes('handoff')) {
-      return MOCK_RESPONSES['Show me a simple, visual simulation of a payment handoff.'];
+    // Priority 3: Data gap
+    if (query.includes('gap') || query.includes('data') || query.includes('broken') || query.includes('evidence')) {
+      return MOCK_RESPONSES['Why are transaction data rails broken in Kenya?'];
+    }
+    // Priority 4: Proof / how it coordinates
+    if (query.includes('how') || query.includes('work') || query.includes('coordinate') || query.includes('proof') || query.includes('money') || query.includes('touch')) {
+      return MOCK_RESPONSES['How does Connex coordinate payments without touching the money?'];
     }
 
-    return `I am currently in development mode. In production, your Namecheap server queries the DeepSeek-V3 API securely.
+    return `Hi, I am Roy. You are running this website in a local development environment. 
 
-Please select a quick shortcut button below to test a live payment simulation or explain the system using analogies.`;
+To test, please click one of the quick shortcut buttons below to see simulations and briefings, or enter questions containing keywords like "Roy", "dispute", "gap", or "proof".`;
   };
 
   // 5. Send message payload
@@ -215,6 +233,16 @@ Please select a quick shortcut button below to test a live payment simulation or
     setMessages(prev => [...prev, userMsg]);
     setInput('');
     setIsTyping(true);
+
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+    if (isLocal) {
+      setTimeout(() => {
+        const fallbackText = getLocalFallbackReply(textToSend);
+        streamResponse(fallbackText);
+      }, 500);
+      return;
+    }
 
     try {
       const history = messages
@@ -230,7 +258,10 @@ Please select a quick shortcut button below to test a live payment simulation or
       });
 
       if (!res.ok) {
-        throw new Error('API communication failure');
+        if (res.status === 429) {
+          throw new Error('Please wait 3 seconds between messages.');
+        }
+        throw new Error('Server returned an error.');
       }
 
       const data = await res.json();
@@ -240,10 +271,8 @@ Please select a quick shortcut button below to test a live payment simulation or
 
       streamResponse(data.message || 'No response returned.');
     } catch (err) {
-      setTimeout(() => {
-        const fallbackText = getLocalFallbackReply(textToSend);
-        streamResponse(fallbackText);
-      }, 500);
+      setIsTyping(false);
+      setMessages(prev => [...prev, { role: 'bot', content: `SYSTEM ERROR: ${err.message}` }]);
     }
   };
 
