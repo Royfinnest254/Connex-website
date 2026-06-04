@@ -261,7 +261,16 @@ To test, please click one of the quick shortcut buttons below to see simulations
         if (res.status === 429) {
           throw new Error('Please wait 3 seconds between messages.');
         }
-        throw new Error('Server returned an error.');
+        let serverErrorMsg = 'Server returned an error.';
+        try {
+          const errData = await res.json();
+          if (errData && errData.error) {
+            serverErrorMsg = errData.error;
+          }
+        } catch (e) {
+          // ignore parsing error
+        }
+        throw new Error(serverErrorMsg);
       }
 
       const data = await res.json();
