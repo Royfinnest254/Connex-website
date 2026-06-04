@@ -7,6 +7,62 @@ const SHORTCUTS = [
   { label: 'About Roy', cmd: 'Tell me about the founder and CEO, Roy Chumba.' }
 ];
 
+const MOCK_RESPONSES = {
+  'Simulate a cross-institutional payment dispute resolution step by step.': 
+`SIMULATING CROSS-INSTITUTIONAL DISPUTE RESOLUTION:
+
+STEP 1: PAYMENT HANDOFF INITIATION
+Sender sends KES 50,000 via M-Pesa to Equity Bank. The legacy rail processes the core transaction but drops recipient name and structured address metadata.
+
+STEP 2: CORRELATION ALERT
+Equity Bank's core system flags the transaction due to missing compliance fields. Funds are frozen. Manual logs are printed.
+
+STEP 3: CONNEX COORDINATION QUERY
+Compliance officer queries the Connex coordination layer using the unique transaction hash.
+
+STEP 4: CRYPTOGRAPHIC PROOF VERIFICATION
+Connex checks the 2-of-3 witness node consensus signatures (Ed25519) and SHA-256 parent hash chain.
+- Witness Node A: VERIFIED (Signature matches)
+- Witness Node B: VERIFIED (Signature matches)
+- Witness Node C: VERIFIED (Signature matches)
+
+STEP 5: RESOLUTION
+The complete enriched ISO 20022 message metadata is retrieved from the secure database. The recipient address is verified. The bank releases the funds.
+
+TOTAL ELAPSED TIME: 5.2 SECONDS (Compared to 5.2 weeks on legacy rails).`,
+
+  'Explain the Data Gap vs the Evidence Gap in Kenyan payments.':
+`THE COORDINATION GAP IN KENYAN PAYMENTS:
+
+THE DATA GAP
+When money moves between institutions (e.g. M-Pesa to KCB), legacy core systems running ISO 8583 format drop up to 35+ critical metadata fields (like structured sender/receiver addresses and purpose codes). The receiving institution gets an incomplete picture, forcing manual compliance investigations.
+
+THE EVIDENCE GAP
+No single party holds the independent, neutral record of the handoff. Both sending and receiving banks maintain separate databases. When logs disagree, there is no shared truth. Resolving disputes takes weeks of administrative overhead.
+
+THE CONNEX SOLUTION
+Connex resolves both gaps. We enrich the transaction message with missing metadata to achieve full ISO 20022 compliance, and we secure a cryptographically signed proof of the handoff witnessed by independent nodes.`,
+
+  'What is the technical architecture of Connex? Detail the Go, Python, and PostgreSQL stack.':
+`CONNEX SYSTEM ARCHITECTURE:
+
+1. DATA ENRICHMENT LAYER (Local Python AI Microservices)
+Uses local XGBoost models for purpose code classification and local DistilBERT engines for structured address parsing over secure Unix sockets (~2ms latency). Decoupled from the web to guarantee absolute user data privacy.
+
+2. COORDINATION PROOF LAYER (Go Consensus Engine)
+Performs sub-10ms signature verification using Ed25519 keys. Distributes hashes to three witness nodes. A 2-of-3 quorum consensus signature is collected in parallel via non-blocking Go channels.
+
+3. AUDIT & DELIVERY LAYER (PostgreSQL Append-Only Storage)
+Delivers compliant ISO 20022 XML messages to national rails (KEPSS/PesaLink) while appending the signed proof bundles to a PostgreSQL database protected by database-level immutable rules.`,
+
+  'Tell me about the founder and CEO, Roy Chumba.':
+`ABOUT THE FOUNDER:
+
+Roy Chumba is a 19-year-old self-taught systems engineer based in Kenya. He is a three-time winner of the prestigious Kenya Science and Engineering Fair in Computer Science.
+
+Roy founded Connex Technologies to build the neutral coordination proof layer for cross-institutional payment handoffs in East Africa. He also serves as the ICT Officer and Web Developer at Clean Heights Initiative, an environmental community organization in Kenya.`
+};
+
 export default function FloatingAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -163,7 +219,6 @@ export default function FloatingAssistant() {
     let index = 0;
     setStreamText('');
     
-    // Calculate print chunk sizes for quick fluid response printing
     const charsPerStep = 4;
     const interval = setInterval(() => {
       if (index >= fullText.length) {
@@ -176,6 +231,35 @@ export default function FloatingAssistant() {
         index += charsPerStep;
       }
     }, 10);
+  };
+
+  // Helper to handle local offline fallback matching
+  const getLocalFallbackReply = (text) => {
+    // Exact match check
+    if (MOCK_RESPONSES[text]) {
+      return MOCK_RESPONSES[text];
+    }
+    
+    // Keyword match checks
+    const query = text.toLowerCase();
+    if (query.includes('dispute') || query.includes('simulate')) {
+      return MOCK_RESPONSES['Simulate a cross-institutional payment dispute resolution step by step.'];
+    }
+    if (query.includes('gap') || query.includes('data') || query.includes('evidence')) {
+      return MOCK_RESPONSES['Explain the Data Gap vs the Evidence Gap in Kenyan payments.'];
+    }
+    if (query.includes('architecture') || query.includes('tech') || query.includes('stack') || query.includes('go') || query.includes('python')) {
+      return MOCK_RESPONSES['What is the technical architecture of Connex? Detail the Go, Python, and PostgreSQL stack.'];
+    }
+    if (query.includes('roy') || query.includes('chumba') || query.includes('founder') || query.includes('ceo')) {
+      return MOCK_RESPONSES['Tell me about the founder and CEO, Roy Chumba.'];
+    }
+
+    return `DEVELOPMENT ENVIRONMENT ACTIVE:
+
+This assistant is communicating locally. In production, cPanel proxies requests to the DeepSeek completions model securely via chat.php.
+
+To verify layout and streaming text, please select one of the quick shortcuts below.`;
   };
 
   // 5. Send payload to php endpoint
@@ -195,7 +279,8 @@ export default function FloatingAssistant() {
       
       history.push(userMsg);
 
-      const res = await fetch('/chat.php', {
+      // Relative path chat.php ensures correct subfolder routing
+      const res = await fetch('chat.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: history })
@@ -212,8 +297,11 @@ export default function FloatingAssistant() {
 
       streamResponse(data.message || 'No response returned.');
     } catch (err) {
-      setIsTyping(false);
-      setMessages(prev => [...prev, { role: 'bot', content: 'SYSTEM ERROR: Could not dispatch message. Please try again.' }]);
+      // Local development or server connection fallback
+      setTimeout(() => {
+        const fallbackText = getLocalFallbackReply(textToSend);
+        streamResponse(fallbackText);
+      }, 500);
     }
   };
 
@@ -259,7 +347,7 @@ export default function FloatingAssistant() {
             )}
             {isTyping && (
               <div className="assistant-typing">
-                SYSTEM: Processing request...
+                SYSTEM: Connecting to DeepSeek...
               </div>
             )}
             <div ref={messageEndRef} />
@@ -298,7 +386,7 @@ export default function FloatingAssistant() {
               />
               <button 
                 type="submit" 
-                className="assistant-submit"
+                className="btn assistant-submit"
                 disabled={isTyping || !!streamText || !input.trim()}
               >
                 SEND
