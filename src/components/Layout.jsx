@@ -42,6 +42,7 @@ export default function Layout({ children }) {
       <Header />
       <main>{children}</main>
       <Footer />
+      {/* deployment trigger comment */}
       <div className="tex tex--vignette" aria-hidden="true" />
       <div className="tex tex--grid" aria-hidden="true" />
       <div className="tex tex--grain" aria-hidden="true" />
