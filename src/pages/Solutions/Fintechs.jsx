@@ -4,7 +4,6 @@ import NetBackground from '../../components/NetBackground';
 export default function Fintechs() {
   return (
     <>
-      <title>Connex for Fintechs | Verified Payment Infrastructure | Connex Technologies</title>
 
       <section className="page-hero" aria-labelledby="fintechs-hero-h">
         <NetBackground />

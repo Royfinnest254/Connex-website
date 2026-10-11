@@ -33,3 +33,5 @@ To run the site locally:
    ```bash
    npm run build
    ```
+
+The production build pre-renders each public route as HTML, writes the sitemap from the route metadata, and prepares optimized organization and founder images for search and sharing previews. The Apache configuration serves those route files directly and returns a not-found response for unknown paths.

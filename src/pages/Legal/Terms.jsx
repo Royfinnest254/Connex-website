@@ -3,7 +3,6 @@ import NetBackground from '../../components/NetBackground';
 export default function Terms() {
   return (
     <>
-      <title>Terms of Use | Connex Technologies</title>
 
       <section className="page-hero" aria-labelledby="terms-hero-h">
         <NetBackground />

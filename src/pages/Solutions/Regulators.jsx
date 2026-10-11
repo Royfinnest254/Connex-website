@@ -4,7 +4,6 @@ import NetBackground from '../../components/NetBackground';
 export default function Regulators() {
   return (
     <>
-      <title>Connex for Regulators | Payment Oversight and Evidence Infrastructure | Connex Technologies</title>
 
       <section className="page-hero" aria-labelledby="regs-hero-h">
         <NetBackground />

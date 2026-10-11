@@ -6,20 +6,39 @@ export default function Contact() {
   const [form, setForm] = useState({ name: '', org: '', role: '', email: '', type: '', message: '' });
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
 
   const handle = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
 
   const submit = async e => {
     e.preventDefault();
     setSending(true);
-    await new Promise(r => setTimeout(r, 800));
-    setSent(true);
-    setSending(false);
+    setError('');
+    try {
+      const response = await fetch('/contact.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          requestType: 'briefing',
+          name: form.name,
+          institution: form.org,
+          role: form.role,
+          email: form.email,
+          message: [form.type && `Interested in: ${form.type}`, form.message].filter(Boolean).join('\n\n')
+        })
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.error || 'We could not send your message. Please email info@connextechnologies.org.');
+      setSent(true);
+    } catch (submitError) {
+      setError(submitError.message || 'We could not send your message. Please email info@connextechnologies.org.');
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
     <>
-      <title>Contact Connex Technologies | Request Access or a Briefing</title>
 
       <section className="page-hero" aria-labelledby="contact-hero-h">
         <NetBackground />
@@ -46,7 +65,7 @@ export default function Contact() {
                   <button className="btn" onClick={() => { setSent(false); setForm({ name: '', org: '', role: '', email: '', type: '', message: '' }); }}>Send Another Message</button>
                 </div>
               ) : (
-                <form onSubmit={submit} noValidate id="contact-form">
+                <form onSubmit={submit} id="contact-form">
                   <div className="form-row">
                     <div className="field">
                       <label htmlFor="cf-name">Full Name</label>
@@ -86,6 +105,7 @@ export default function Contact() {
                   <button className="btn" type="submit" disabled={sending} style={{ marginTop: 8 }}>
                     {sending ? 'Sending...' : <>Send Message <span className="arrow">→</span></>}
                   </button>
+                  {error && <p role="alert" className="muted" style={{ marginTop: 16 }}>{error}</p>}
                 </form>
               )}
             </div>

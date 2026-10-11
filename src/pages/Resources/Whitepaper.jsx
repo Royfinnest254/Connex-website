@@ -5,19 +5,38 @@ export default function Whitepaper() {
   const [form, setForm] = useState({ name: '', org: '', email: '', role: '' });
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
 
   const handle = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
   const submit = async e => {
     e.preventDefault();
     setSending(true);
-    await new Promise(r => setTimeout(r, 800));
-    setSent(true);
-    setSending(false);
+    setError('');
+    try {
+      const response = await fetch('/contact.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          requestType: 'whitepaper',
+          name: form.name,
+          institution: form.org,
+          role: form.role,
+          email: form.email,
+          message: 'Whitepaper access request'
+        })
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.error || 'We could not send your request. Please email info@connextechnologies.org.');
+      setSent(true);
+    } catch (submitError) {
+      setError(submitError.message || 'We could not send your request. Please email info@connextechnologies.org.');
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
     <>
-      <title>Whitepaper | Connex Technologies | Payment Coordination Layer Technical Documentation</title>
 
       <section className="page-hero" aria-labelledby="wp-hero-h">
         <NetBackground />
@@ -68,6 +87,7 @@ export default function Whitepaper() {
                       {sending ? 'Sending...' : <>Request Whitepaper <span className="arrow">→</span></>}
                     </button>
                   </div>
+                  {error && <p role="alert" className="muted" style={{ marginTop: 16, textAlign: 'center' }}>{error}</p>}
                 </form>
               </>
             )}

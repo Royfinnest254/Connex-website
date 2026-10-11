@@ -3,7 +3,6 @@ import NetBackground from '../../components/NetBackground';
 export default function Privacy() {
   return (
     <>
-      <title>Privacy Policy | Connex Technologies</title>
 
       <section className="page-hero" aria-labelledby="privacy-hero-h">
         <NetBackground />

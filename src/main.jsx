@@ -1,10 +1,13 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import { hydrateRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import { AppRoutes } from './App.jsx'
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+document.documentElement.classList.add('js-enabled')
+
+hydrateRoot(document.getElementById('root'),
   <React.StrictMode>
-    <App />
+    <BrowserRouter><AppRoutes /></BrowserRouter>
   </React.StrictMode>,
 )

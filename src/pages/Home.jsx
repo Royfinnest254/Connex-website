@@ -92,7 +92,6 @@ export default function Home() {
 
   return (
     <>
-      <title>Connex Technologies | Payment Coordination Layer for Kenya</title>
 
       {/* ========== HERO ========== */}
       <section className="hero" id="hero" ref={heroRef} aria-label="Hero">

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const Logo = () => (
   <svg viewBox="23 63 514 374" fill="none" aria-hidden="true" style={{ height: 22, width: 30, flexShrink: 0 }}>
@@ -37,10 +37,10 @@ const NAV = [
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDrop, setOpenDrop] = useState(null);
-  const { pathname } = useLocation();
-
-  useEffect(() => { setMenuOpen(false); setOpenDrop(null); }, [pathname]);
-  useEffect(() => { document.body.style.overflow = menuOpen ? 'hidden' : ''; }, [menuOpen]);
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
 
   return (
     <>
