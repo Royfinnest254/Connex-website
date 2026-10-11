@@ -4,7 +4,6 @@ import NetBackground from '../../components/NetBackground';
 export default function Banks() {
   return (
     <>
-      <title>Connex for Banks | ISO 20022 Enrichment and Payment Proof | Connex Technologies</title>
 
       <section className="page-hero" aria-labelledby="banks-hero-h">
         <NetBackground />

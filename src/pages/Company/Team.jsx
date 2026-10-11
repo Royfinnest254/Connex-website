@@ -1,11 +1,9 @@
 import { Link } from 'react-router-dom';
 import NetBackground from '../../components/NetBackground';
-import royImage from '../../assets/images/roy.png';
 
 export default function Team() {
   return (
     <>
-      <title>Team | Connex Technologies | Founded by Roy Chumba</title>
 
       <section className="page-hero" aria-labelledby="team-hero-h">
         <NetBackground />
@@ -25,7 +23,7 @@ export default function Team() {
           </div>
           <div className="founder reveal">
             <div className="founder-photo">
-              <img src={royImage} alt="Roy Chumba, Founder and CEO of Connex Technologies" />
+              <img src="/images/roy-chumba.webp" alt="Roy Chumba, founder and CEO of Connex Technologies" width="784" height="860" decoding="async" />
               <span className="ph-tag">Founder &amp; CEO</span>
             </div>
             <div>

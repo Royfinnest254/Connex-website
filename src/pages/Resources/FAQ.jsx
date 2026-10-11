@@ -99,7 +99,6 @@ function FaqItem({ q, a }) {
 export default function FAQ() {
   return (
     <>
-      <title>FAQ | Connex Technologies | Payment Coordination Questions Answered</title>
 
       <section className="page-hero" aria-labelledby="faq-hero-h">
         <NetBackground />

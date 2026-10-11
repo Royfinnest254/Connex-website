@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 
 
@@ -18,9 +18,8 @@ import Contact from './pages/Contact';
 import Privacy from './pages/Legal/Privacy';
 import Terms from './pages/Legal/Terms';
 
-function App() {
+export function AppRoutes() {
   return (
-    <Router>
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -38,8 +37,7 @@ function App() {
           <Route path="/legal/terms" element={<Terms />} />
         </Routes>
       </Layout>
-    </Router>
   );
 }
 
-export default App;
+export default AppRoutes;

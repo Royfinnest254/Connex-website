@@ -32,10 +32,13 @@ $from_email = "info@connextechnologies.org";
 $website_name = "Connex Technologies";
 
 $name = isset($data['name']) ? strip_tags(trim($data['name'])) : '';
-$institution = isset($data['institution']) ? strip_tags(trim($data['institution'])) : '';
+$institution = isset($data['institution']) ? strip_tags(trim($data['institution'])) : (isset($data['org']) ? strip_tags(trim($data['org'])) : '');
 $role = isset($data['role']) ? strip_tags(trim($data['role'])) : '';
 $email = isset($data['email']) ? filter_var(trim($data['email']), FILTER_SANITIZE_EMAIL) : '';
-$message = isset($data['message']) ? strip_tags(trim($data['message'])) : 'No message provided';
+$message = isset($data['message']) ? trim($data['message']) : 'No message provided';
+$request_type = isset($data['requestType']) && $data['requestType'] === 'whitepaper' ? 'whitepaper' : 'briefing';
+$request_label = $request_type === 'whitepaper' ? 'Whitepaper Access Request' : 'Institutional Briefing Request';
+$institution = str_replace(["\r", "\n"], ' ', $institution);
 
 if (empty($name) || empty($email)) {
     http_response_code(400);
@@ -49,10 +52,15 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-$formatted_message = nl2br($message);
+$formatted_message = nl2br(htmlspecialchars($message, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'));
+$name_html = htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$institution_html = htmlspecialchars($institution, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$role_html = htmlspecialchars($role, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$email_html = htmlspecialchars($email, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$name = str_replace(["\r", "\n"], '', $name);
 
 // 1. Email to Roy Chumba
-$email_subject = "[Connex Contact] Briefing Request: $institution";
+$email_subject = "[Connex Contact] $request_label: $institution";
 $email_content = <<<HTML
 <!DOCTYPE html>
 <html>
@@ -68,7 +76,7 @@ $email_content = <<<HTML
             <tr>
                 <td style="vertical-align: middle;">
                     <span style="color: #00869B; text-transform: uppercase; font-size: 11px; letter-spacing: 0.18em; font-weight: 600; display: block; margin-bottom: 4px;">Inbound request</span>
-                    <h2 style="font-family: Georgia, serif; font-size: 22px; font-weight: 800; color: #f2f1ec; margin: 0; text-transform: uppercase; letter-spacing: -0.02em;">Briefing Request</h2>
+                    <h2 style="font-family: Georgia, serif; font-size: 22px; font-weight: 800; color: #f2f1ec; margin: 0; text-transform: uppercase; letter-spacing: -0.02em;">$request_label</h2>
                 </td>
                 <td style="vertical-align: middle; text-align: right;">
                     <img src="https://connextechnologies.org/logo.png" alt="Connex" style="height: 34px; width: 34px; display: inline-block;">
@@ -80,19 +88,19 @@ $email_content = <<<HTML
         <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 15px;">
             <tr style="border-bottom: 1px solid rgba(242,241,236,0.08);">
                 <td style="padding: 12px 0; color: #a7a6a0; width: 130px;">Name</td>
-                <td style="padding: 12px 0; color: #f2f1ec; font-weight: 600;">$name</td>
+                <td style="padding: 12px 0; color: #f2f1ec; font-weight: 600;">$name_html</td>
             </tr>
             <tr style="border-bottom: 1px solid rgba(242,241,236,0.08);">
                 <td style="padding: 12px 0; color: #a7a6a0;">Institution</td>
-                <td style="padding: 12px 0; color: #f2f1ec; font-weight: 600;">$institution</td>
+                <td style="padding: 12px 0; color: #f2f1ec; font-weight: 600;">$institution_html</td>
             </tr>
             <tr style="border-bottom: 1px solid rgba(242,241,236,0.08);">
                 <td style="padding: 12px 0; color: #a7a6a0;">Role</td>
-                <td style="padding: 12px 0; color: #f2f1ec;">$role</td>
+                <td style="padding: 12px 0; color: #f2f1ec;">$role_html</td>
             </tr>
             <tr style="border-bottom: 1px solid rgba(242,241,236,0.08);">
                 <td style="padding: 12px 0; color: #a7a6a0;">Email</td>
-                <td style="padding: 12px 0; color: #00869B; font-weight: 600;"><a href="mailto:$email" style="color: #00869B; text-decoration: none;">$email</a></td>
+                <td style="padding: 12px 0; color: #00869B; font-weight: 600;"><a href="mailto:$email_html" style="color: #00869B; text-decoration: none;">$email_html</a></td>
             </tr>
         </table>
 
@@ -111,7 +119,7 @@ $headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 
 // 2. Email to Visitor
-$visitor_subject = "Thank you for contacting Connex Technologies";
+$visitor_subject = $request_type === 'whitepaper' ? "We received your Connex whitepaper request" : "Thank you for contacting Connex Technologies";
 $visitor_content = <<<HTML
 <!DOCTYPE html>
 <html>
@@ -135,11 +143,11 @@ $visitor_content = <<<HTML
         </table>
 
         <!-- Greeting -->
-        <h2 style="font-family: Georgia, serif; font-size: 22px; font-weight: 700; color: #f2f1ec; margin-top: 0; margin-bottom: 24px; line-height: 1.25;">Dear $name,</h2>
+        <h2 style="font-family: Georgia, serif; font-size: 22px; font-weight: 700; color: #f2f1ec; margin-top: 0; margin-bottom: 24px; line-height: 1.25;">Dear $name_html,</h2>
 
         <!-- Message Body -->
         <p style="font-size: 16px; line-height: 1.6; color: #a7a6a0; margin-bottom: 20px; font-weight: 400;">
-            Thank you for reaching out to Connex Technologies. We have successfully received your request for an institutional briefing regarding <strong style="color: #f2f1ec;">$institution</strong>.
+            Thank you for reaching out to Connex Technologies. We have received your $request_type request regarding <strong style="color: #f2f1ec;">$institution_html</strong>.
         </p>
 
         <p style="font-size: 16px; line-height: 1.6; color: #a7a6a0; margin-bottom: 32px; font-weight: 400;">

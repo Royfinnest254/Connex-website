@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
+import { SeoManager } from '../seo';
 
 export default function Layout({ children }) {
   const { pathname } = useLocation();
@@ -39,7 +40,8 @@ export default function Layout({ children }) {
 
   return (
     <>
-      <Header />
+      <SeoManager />
+      <Header key={pathname} />
       <main>{children}</main>
       <Footer />
       {/* deployment trigger comment */}

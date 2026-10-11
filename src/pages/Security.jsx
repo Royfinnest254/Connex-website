@@ -4,7 +4,6 @@ import NetBackground from '../components/NetBackground';
 export default function Security() {
   return (
     <>
-      <title>Security | Connex Technologies | How We Protect Payment Proof Infrastructure</title>
 
       <section className="page-hero" aria-labelledby="sec-hero-h">
         <NetBackground />

@@ -4,7 +4,6 @@ import NetBackground from '../../components/NetBackground';
 export default function About() {
   return (
     <>
-      <title>About Connex Technologies | Payment Coordination Layer Founded in Kenya</title>
 
       <section className="page-hero" aria-labelledby="about-hero-h">
         <NetBackground />

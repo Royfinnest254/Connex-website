@@ -4,7 +4,6 @@ import NetBackground from '../components/NetBackground';
 export default function Product() {
   return (
     <>
-      <title>How Connex Works | Payment Coordination Layer | Connex Technologies</title>
 
       <section className="page-hero" aria-labelledby="product-hero-heading">
         <NetBackground />
